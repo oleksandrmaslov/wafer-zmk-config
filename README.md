@@ -1,11 +1,43 @@
-# ZMK Module Template
+# Wafer Split Keyboard
 
-This repository contains a template for a ZMK module, as it would most frequently be used. 
+<div align="center">
+    <img src="assets/wafer.jpg" alt="Wafer Split Keyboard" width="800"/>
+    
+*Ultra-thin. Ultra-comfortable. Ultra-productive.*
+</div>
 
-## Usage
+## Overview
 
-Read through the [ZMK Module Creation](https://zmk.dev/docs/development/module-creation) page for details on how to configure this template.
+Wafer is a cutting-edge split mechanical keyboard designed for those who demand both elegance and functionality. With its remarkably thin profile, it redefines what's possible in ergonomic keyboard design.
 
-## More Info
+### ✨ Key Features
 
-For more info on modules, you can read through  through the [Zephyr modules page](https://docs.zephyrproject.org/3.5.0/develop/modules.html) and [ZMK's page on using modules](https://zmk.dev/docs/features/modules). [Zephyr's west manifest page](https://docs.zephyrproject.org/3.5.0/develop/west/manifest.html#west-manifests) may also be of use.
+- **Ultra-thin Profile**: Engineered for maximum comfort with minimal desk footprint
+- **Split Design**: Independent halves for optimal ergonomic positioning
+- **Wireless Freedom**: Bluetooth connectivity for a clean, cable-free setup
+- **ZMK Firmware**: Powered by modern, wireless-first ZMK firmware
+- **Long Battery Life**: Month of battery life design for extended use
+- **Memory-in-pixel Display**: Built-in display for battery, connectivity, and layer status, `and Raw HID functions (to be implemented)`
+
+Double tap the power button to open a bootloader, flash both halves with the compiled firmware
+
+Pair your keyboard and enjoy the typing experience!
+
+## Technical Specifications
+
+- **Controller**: ARM-based microcontroller [ISP1807], based on nrf52840
+- **Connectivity**: Bluetooth LE & USB-C
+- **Features**:
+  - Custom status display `(nice!view compatible, custom UI in development)`
+  - Advanced power management
+
+
+## License
+
+This project is released under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+Made with ❤️ by the Oleksandr Maslov
+</div>

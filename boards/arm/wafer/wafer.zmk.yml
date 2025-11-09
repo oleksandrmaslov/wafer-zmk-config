@@ -1,0 +1,16 @@
+file_format: "1"
+id: wafer
+name: wafer
+type: board
+arch: arm
+url: https://example.com/wafer
+features:
+  - keys
+  - display
+  - studio
+outputs:
+  - usb
+  - ble
+siblings:
+  - wafer_left
+  - wafer_right
