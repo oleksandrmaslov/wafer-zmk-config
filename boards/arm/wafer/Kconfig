@@ -1,13 +1,10 @@
-config BOARD_WAFER_LEFT
-    select SOC_NRF52840_QIAA
-    imply RETAINED_MEM
-    imply RETENTION
-    imply RETENTION_BOOT_MODE
-    help
-      Enable support for the Wafer board using the nRF52840 SoC.
+if BOARD_WAFER_LEFT || BOARD_WAFER_RIGHT
 
-config BOARD_WAFER_RIGHT
-    select SOC_NRF52840_QIAA
-    imply RETAINED_MEM
-    imply RETENTION
-    imply RETENTION_BOOT_MODE
+config BOARD_ENABLE_RETENTION
+    bool "Enable retention feature"
+    default y
+    select RETAINED_MEM
+    select RETENTION
+    select RETENTION_BOOT_MODE
+
+endif # BOARD_WAFER_LEFT || BOARD_WAFER_RIGHT
