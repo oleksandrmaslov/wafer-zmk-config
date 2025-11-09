@@ -1,7 +1,6 @@
-# Delete all unused properties.
-
-# Give your module a name
 name: wafer-zmk-config
 build:
   settings:
     board_root: .
+    dts_root: .
+
