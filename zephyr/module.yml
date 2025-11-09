@@ -3,7 +3,6 @@
 # Give your module a name
 name: wafer-zmk-config
 build:
-  # List your dependencies
   depends:
   # Folder containing a "CMakeLists.txt" (. = root)
   cmake: .
@@ -14,5 +13,3 @@ build:
     board_root: .
     # Folder containing a "dts" folder (. = root)
     dts_root: .
-    # Folder containing a "snippets" folder (. = root)
-    snippet_root:  .

@@ -1,0 +1,12 @@
+# mikoto board configuration
+
+# Copyright (c) 2020 The ZMK Contributors
+# SPDX-License-Identifier: MIT
+
+config BOARD_WAFER_LEFT  
+    bool "Wafer (Left)"
+    depends on SOC_NRF52840_QIAA
+
+config BOARD_WAFER_RIGHT
+    bool "Wafer (Right)"
+    depends on SOC_NRF52840_QIAA

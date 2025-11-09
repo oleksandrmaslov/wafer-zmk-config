@@ -1,0 +1,207 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/dts-v1/;
+#include <nordic/nrf52840_qiaa.dtsi>
+#include "wafer-pinctrl.dtsi"
+#include <dt-bindings/zmk/matrix_transform.h>
+#include <dt-bindings/regulator/npm1300.h>
+#include <layouts/wafer/wafer_layout.dtsi>
+
+&wafer_layout_phys {
+    transform = <&default_transform>;
+};
+
+ / {
+    model = "wafer";
+    compatible = "waferkeyboard,wafer";
+
+    chosen {
+        zephyr,code-partition = &code_partition;
+        zephyr,sram = &sram0;
+        zephyr,flash = &flash0;
+
+        zmk,physical-layout = &wafer_layout_phys;
+        zephyr,display = &display;
+        zmk,battery = &npm1300_charger;
+    };
+
+    default_transform: keymap_transform_0 {
+        compatible = "zmk,matrix-transform";
+        columns = <10>;
+        rows = <4>;
+
+        map = <
+            RC(0,0) RC(0,1) RC(0,2) RC(0,3) RC(0,4) RC(0,5) RC(0,6) RC(0,7) RC(0,8) RC(0,9)
+            RC(1,0) RC(1,1) RC(1,2) RC(1,3) RC(1,4) RC(1,5) RC(1,6) RC(1,7) RC(1,8) RC(1,9)
+            RC(2,0) RC(2,1) RC(2,2) RC(2,3) RC(2,4) RC(2,5) RC(2,6) RC(2,7) RC(2,8) RC(2,9)
+                            RC(3,2) RC(3,3) RC(3,4) RC(3,5) RC(3,6) RC(3,7)
+        >;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        blue_led: led_0 {
+            gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+        };
+    };
+
+    /*
+     * Управление внешним питанием (например дисплея) через GPIO nPM1300.
+     * Внутри nPM1300-конфига свяжешь этот GPIO с нужным LDO/LS.
+     */
+    EXT_POWER {
+        compatible = "zmk,ext-power-generic";
+        control-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_HIGH>;
+        init-delay-ms = <50>;
+    };
+};
+
+/* Базовые переферии */
+
+&gpio0 { status = "okay"; };
+&gpio1 { status = "okay"; };
+&gpiote { status = "okay"; };
+&adc   { status = "okay"; };
+
+/* UART для отладки */
+
+&uart0 {
+    compatible = "nordic,nrf-uarte";
+    current-speed = <115200>;
+    status = "okay";
+    pinctrl-0 = <&uart0_default>;
+    pinctrl-1 = <&uart0_sleep>;
+    pinctrl-names = "default", "sleep";
+};
+
+/* nice!view (Sharp LS0xx) по SPI0: MOSI=P0.20, SCK=P0.17, CS=P0.06 */
+
+display_spi: &spi0 {
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
+
+    display: ls0xx@0 {
+        compatible = "sharp,ls0xx";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        width = <160>;
+        height = <68>;
+
+        /* (Load Switch enable) */
+        vin-supply = <&npm1300_ldo1>;
+    };
+};
+
+/* I2C1: шина для nPM1300, BAT_I2C_SCL=P0.02, BAT_I2C_SDA=P0.31 */
+
+&i2c1 {
+    compatible = "nordic,nrf-twi";
+    status = "okay";
+    pinctrl-0 = <&i2c1_default>;
+    pinctrl-1 = <&i2c1_sleep>;
+    pinctrl-names = "default", "sleep";
+
+    pmic: pmic@6b {
+        compatible = "nordic,npm1300";
+        reg = <0x6b>;
+        status = "okay";
+
+        /* Пример: INT nPM1300 → P0.28. Если у тебя иначе — правим тут. */
+        host-int-gpios = <&gpio0 28 GPIO_ACTIVE_LOW>;
+        pmic-int-pin = <0>;
+
+        /* Экспорт 5 GPIO из nPM1300 */
+        npm1300_gpio: gpio-controller {
+            compatible = "nordic,npm1300-gpio";
+            gpio-controller;
+            #gpio-cells = <2>;
+            ngpios = <5>;
+        };
+
+        /* Регуляторы nPM1300 (сюда потом подставишь значения из PowerUP) */
+        npm1300_regulators: regulators {
+            compatible = "nordic,npm1300-regulator";
+
+            npm1300_buck1: BUCK1 {
+                status = "disabled";
+            };
+
+            npm1300_buck2: BUCK2 {
+                regulator-min-microvolt = <1800000>;
+                regulator-max-microvolt = <3300000>;
+                regulator-boot-on;
+                regulator-initial-mode = <NPM1300_BUCK_MODE_AUTO>;
+            };
+
+            /* LDO1 — питание дисплея, как LS */
+            npm1300_ldo1: LDO1 {
+                regulator-min-microvolt = <3000000>;
+                regulator-max-microvolt = <3300000>;
+                regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+            };
+
+            /* Свободный LDO2 под что угодно */
+            npm1300_ldo2: LDO2 {
+                regulator-min-microvolt = <1800000>;
+                regulator-max-microvolt = <3300000>;
+                regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+            };
+        };
+
+        npm1300_charger: charger {
+            compatible = "nordic,npm1300-charger";
+            status = "okay";
+
+            term-microvolt = <4200000>;
+            term-warm-microvolt = <3600000>;
+            current-microamp = <124000>;
+            dischg-limit-microamp = <1000000>;
+            vbus-limit-microamp = <500000>;
+            thermistor-ohms = <10000>;
+            thermistor-beta = <3380>;
+            charging-enable;
+        };
+
+        npm1300_leds: leds {
+            compatible = "nordic,npm1300-led";
+            nordic,led0-mode = "charging";
+            nordic,led1-mode = "host";
+            nordic,led2-mode = "host";
+        };
+    };
+};
+
+/* USB */
+zephyr_udc0: &usbd {
+    status = "okay";
+};
+
+
+&flash0 {
+    partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        sd_partition: partition@0 {
+            reg = <0x00000000 0x00026000>;
+        };
+        code_partition: partition@26000 {
+            reg = <0x00026000 0x000c6000>;
+        };
+        storage_partition: partition@ec000 {
+            reg = <0x000ec000 0x00008000>;
+        };
+        boot_partition: partition@f4000 {
+            reg = <0x000f4000 0x0000c000>;
+        };
+    };
+};
