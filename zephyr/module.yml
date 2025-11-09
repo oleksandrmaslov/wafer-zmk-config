@@ -3,11 +3,6 @@
 # Give your module a name
 name: wafer-zmk-config
 build:
-  depends:
-  # Folder containing a "CMakeLists.txt" (. = root)
-  cmake: .
-  # Kconfig filepath
-  kconfig: Kconfig
   settings:
     # Folder containing a "boards" folder (. = root)
     board_root: .
