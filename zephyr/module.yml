@@ -4,7 +4,4 @@
 name: wafer-zmk-config
 build:
   settings:
-    # Folder containing a "boards" folder (. = root)
     board_root: .
-    # Folder containing a "dts" folder (. = root)
-    dts_root: .
