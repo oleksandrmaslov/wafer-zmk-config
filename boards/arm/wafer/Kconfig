@@ -1,10 +1,1 @@
-if BOARD_WAFER_LEFT || BOARD_WAFER_RIGHT
 
-config BOARD_ENABLE_RETENTION
-    bool "Enable retention feature"
-    default y
-    select RETAINED_MEM
-    select RETENTION
-    select RETENTION_BOOT_MODE
-
-endif # BOARD_WAFER_LEFT || BOARD_WAFER_RIGHT
