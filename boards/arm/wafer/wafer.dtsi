@@ -205,3 +205,19 @@ zephyr_udc0: &usbd {
         };
     };
 };
+
+/* snippet usb */
+/ {
+    chosen {
+        zephyr,console = &cdc_acm_console_uart;
+        zephyr,shell-uart = &cdc_acm_console_uart;
+    };
+};
+
+zephyr_udc0: &usbd {
+    compatible = "nordic,nrf-usbd";
+    status = "okay";
+    cdc_acm_console_uart: cdc_acm_console_uart {
+        compatible = "zephyr,cdc-acm-uart";
+    };
+};
