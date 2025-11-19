@@ -115,8 +115,8 @@ display_spi: &spi0 {
         status = "okay";
 
         /* Пример: INT nPM1300 → P0.29. 
-        host-int-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
-        pmic-int-pin = <0>;
+       // host-int-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
+       // pmic-int-pin = <0>;
 
         /* Экспорт 5 GPIO из nPM1300 */
         npm1300_gpio: gpio-controller {
