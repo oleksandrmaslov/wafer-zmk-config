@@ -114,8 +114,8 @@ display_spi: &spi0 {
         reg = <0x6b>;
         status = "okay";
 
-        /* Пример: INT nPM1300 → P0.28. Если у тебя иначе — правим тут. */
-        host-int-gpios = <&gpio0 28 GPIO_ACTIVE_LOW>;
+        /* Пример: INT nPM1300 → P0.29. 
+        host-int-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
         pmic-int-pin = <0>;
 
         /* Экспорт 5 GPIO из nPM1300 */
