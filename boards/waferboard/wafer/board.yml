@@ -1,0 +1,9 @@
+boards:
+  - name: wafer_left
+    vendor: waferkeyboards
+    socs:
+      - name: nrf52840
+  - name: wafer_right
+    vendor: waferkeyboards
+    socs:
+      - name: nrf52840
