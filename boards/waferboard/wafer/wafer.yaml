@@ -1,7 +1,7 @@
 identifier: wafer
 name: wafer
 version: 1.0
-url: https://example.com/wafer_mini
+url: https://example.com/wafer
 type: mcu
 arch: arm
 toolchain:
