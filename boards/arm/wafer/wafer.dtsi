@@ -142,7 +142,7 @@ display_spi: &spi0 {
                 regulator-min-microvolt = <1800000>;
                 regulator-max-microvolt = <3300000>;
                 regulator-boot-on;
-                regulator-alwalys-on;
+                regulator-always-on;
                 regulator-initial-mode = <NPM1300_BUCK_MODE_AUTO>;
             };
 
