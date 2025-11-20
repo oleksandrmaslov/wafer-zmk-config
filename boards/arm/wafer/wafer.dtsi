@@ -165,7 +165,7 @@ display_spi: &spi0 {
             current-microamp = <124000>;
             dischg-limit-microamp = <1000000>;
             vbus-limit-microamp = <500000>;
-            thermistor-ohms = <10000>;
+            thermistor-ohms = <0>;
             thermistor-beta = <3380>;
             charging-enable;
         };
