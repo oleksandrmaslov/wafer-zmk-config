@@ -167,7 +167,6 @@ display_spi: &spi0 {
             term-microvolt = <4200000>;
             term-warm-microvolt = <3600000>;
             current-microamp = <124000>;
-            term-current-microamp = <25000>;    /* terminate at 0.1C = 25 mA for 250 mAh */
             dischg-limit-microamp = <1000000>;
             trickle-microvolt = <2900000>;
             vbus-limit-microamp = <500000>;
