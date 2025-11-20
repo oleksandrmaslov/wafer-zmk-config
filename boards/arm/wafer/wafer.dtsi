@@ -8,7 +8,8 @@
 #include <nordic/nrf52840_qiaa.dtsi>
 #include "wafer-pinctrl.dtsi"
 #include <dt-bindings/zmk/matrix_transform.h>
-#include <dt-bindings/regulator/npm1300.h>
+#include <dt-bindings/regulator/npm13xx.h>
+#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <layouts/wafer/wafer_layout.dtsi>
 
 &wafer_layout_phys {
@@ -66,7 +67,9 @@
 &gpio1 { status = "okay"; };
 &gpiote { status = "okay"; };
 &adc   { status = "okay"; };
-
+&reg1 {
+	regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
+};
 /* UART для отладки */
 
 &uart0 {
@@ -131,6 +134,7 @@ display_spi: &spi0 {
             compatible = "nordic,npm1300-regulator";
 
             npm1300_buck1: BUCK1 {
+                regulator-boot-off;
                 status = "disabled";
             };
 
@@ -138,21 +142,20 @@ display_spi: &spi0 {
                 regulator-min-microvolt = <1800000>;
                 regulator-max-microvolt = <3300000>;
                 regulator-boot-on;
-                regulator-initial-mode = <NPM1300_BUCK_MODE_AUTO>;
+                regulator-initial-mode = <NPM13XX_BUCK_MODE_AUTO>;
             };
 
-            /* LDO1 — питание дисплея, как LS */
+            /* LDO1: Display power as LS */
             npm1300_ldo1: LDO1 {
                 regulator-min-microvolt = <3000000>;
                 regulator-max-microvolt = <3300000>;
-                regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+                regulator-initial-mode = <NPM13XX_LDSW_MODE_LDSW>;
+                regulator-boot-on;
             };
 
-            /* Свободный LDO2 под что угодно */
+            /* Free LDO */
             npm1300_ldo2: LDO2 {
-                regulator-min-microvolt = <1800000>;
-                regulator-max-microvolt = <3300000>;
-                regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
+                status = "disabled";
             };
         };
 
@@ -163,10 +166,12 @@ display_spi: &spi0 {
             term-microvolt = <4200000>;
             term-warm-microvolt = <3600000>;
             current-microamp = <124000>;
+            term-current-microamp = <25000>;    /* terminate at 0.1C = 25 mA for 250 mAh */
             dischg-limit-microamp = <1000000>;
+            trickle-microvolt = <2900000>;
             vbus-limit-microamp = <500000>;
             thermistor-ohms = <0>;
-            thermistor-beta = <3380>;
+            thermistor-beta = <0>;
             charging-enable;
         };
 
@@ -174,7 +179,7 @@ display_spi: &spi0 {
             compatible = "nordic,npm1300-led";
             nordic,led0-mode = "charging";
             nordic,led1-mode = "host";
-            nordic,led2-mode = "host";
+            nordic,led2-mode = "error";
         };
     };
 };
@@ -206,18 +211,4 @@ zephyr_udc0: &usbd {
     };
 };
 
-/* snippet usb */
-/ {
-    chosen {
-        zephyr,console = &cdc_acm_console_uart;
-        zephyr,shell-uart = &cdc_acm_console_uart;
-    };
-};
 
-zephyr_udc0: &usbd {
-    compatible = "nordic,nrf-usbd";
-    status = "okay";
-    cdc_acm_console_uart: cdc_acm_console_uart {
-        compatible = "zephyr,cdc-acm-uart";
-    };
-};

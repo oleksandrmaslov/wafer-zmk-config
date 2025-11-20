@@ -26,7 +26,7 @@
     /* nice!view / Sharp LS0xx SPI:
      * SCK  = P0.17
      * MOSI = P0.20
-     * (3-wire, без MISO)
+     * (3-wire interface, no MISO)
      */
     spi0_default: spi0_default {
         group1 {

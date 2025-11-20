@@ -27,17 +27,10 @@
         };
     };
 
-    vbatt: vbatt {
-        compatible = "zmk,battery-voltage-divider";
-        io-channels = <&adc 0>;
-        output-ohms = <1960000>;
-        full-ohms = <(1960000 + 810000)>;
-    };
-
     keys {
         compatible = "gpio-keys";
         soft_off_gpio_key: soft_off_gpio_key {
-            gpios = <&gpio1 4 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+            gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
         };
     };
 
@@ -46,7 +39,7 @@
             compatible = "zmk,behavior-soft-off";
             #binding-cells = <0>;
             split-peripheral-off-on-press;
-            hold-time-ms = <5000>;
+            hold-time-ms = <3000>;
         };
     };
 
