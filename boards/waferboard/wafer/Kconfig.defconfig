@@ -51,36 +51,36 @@ choice ZMK_DISPLAY_WORK_QUEUE
 endchoice
 
 choice ZMK_DISPLAY_STATUS_SCREEN
-    default ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    default ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN
 endchoice
 
-config LV_Z_MEM_POOL_SIZE
-    default 8192 if ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
-
-config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
-    imply NICE_VIEW_WIDGET_STATUS
-
-config NICE_VIEW_WIDGET_STATUS
-    bool "Custom nice!view status widget"
-    select LV_FONT_MONTSERRAT_16
-    select LV_USE_IMG
-    select LV_USE_CANVAS
-
-config NICE_VIEW_WIDGET_INVERTED
-    bool "Invert custom status widget colors"
-
-if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
-
-config NICE_VIEW_WIDGET_STATUS
-    select LV_FONT_MONTSERRAT_18
-    select LV_FONT_MONTSERRAT_14
-    select LV_FONT_UNSCII_8
-    select ZMK_WPM
-
-endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+# config LV_Z_MEM_POOL_SIZE
+#     default 8192 if ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+#
+# config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+#     imply NICE_VIEW_WIDGET_STATUS
+#
+# config NICE_VIEW_WIDGET_STATUS
+#     bool "Custom nice!view status widget"
+#     select LV_FONT_MONTSERRAT_16
+#     select LV_USE_IMG
+#     select LV_USE_CANVAS
+#
+# config NICE_VIEW_WIDGET_INVERTED
+#     bool "Invert custom status widget colors"
+#
+# if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+#
+# config NICE_VIEW_WIDGET_STATUS
+#     select LV_FONT_MONTSERRAT_18
+#     select LV_FONT_MONTSERRAT_14
+#     select LV_FONT_UNSCII_8
+#     select ZMK_WPM
+#
+# endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
 
 config ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN
-    select LV_FONT_MONTSERRAT_26
+    default y
 
 endif # WAFER
 
