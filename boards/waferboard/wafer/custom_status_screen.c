@@ -1,6 +1,6 @@
 /*
  *
- * Copyright (c) 2025 The ZMK Contributors
+ * Copyright (c) 2023 The ZMK Contributors
  * SPDX-License-Identifier: MIT
  *
  */
