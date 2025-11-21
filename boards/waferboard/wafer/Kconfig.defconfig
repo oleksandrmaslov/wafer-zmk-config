@@ -33,6 +33,9 @@ endif # USB
 config BT_CTLR
     default BT
 
+config ZMK_DISPLAY
+    default y
+
 config LV_Z_VDB_SIZE
     default 100
 
