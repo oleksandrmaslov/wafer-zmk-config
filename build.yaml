@@ -21,3 +21,7 @@ include:
  - board: wafer_left
    snippet: zmk-usb-logging
  - board: wafer_right
+ - board: wafer_left
+    shield: settings_reset
+ - board: wafer_right
+    shield: settings_reset
