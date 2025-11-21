@@ -12,9 +12,7 @@ supported:
   - adc
   - usb_device
   - ble
-  - ieee802154
-  - pwm
-  - watchdog
+  - display
   - gpio
   - i2c
   - spi
