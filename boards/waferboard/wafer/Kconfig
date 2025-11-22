@@ -2,9 +2,9 @@ choice
     prompt "Wafer Keyboard"
     depends on SOC_SERIES_NRF52X
 
-source "Kconfig.wafer_left"
-source "Kconfig.wafer_right"
+rsource "Kconfig.wafer_left"
+rsource "Kconfig.wafer_right"
 
 endchoice
 
-source "Kconfig.defconfig"
+rsource "Kconfig.defconfig"
