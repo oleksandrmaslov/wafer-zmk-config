@@ -2,7 +2,7 @@
 
 # Copyright (c) 2020 The ZMK Contributors
 # SPDX-License-Identifier: MIT
-if WAFER_LEFT
+if BOARD_WAFER_LEFT
 
 config ZMK_SPLIT_ROLE_CENTRAL
     default y
@@ -12,7 +12,7 @@ config ZMK_KEYBOARD_NAME
 
 endif
 
-if WAFER_LEFT || WAFER_RIGHT
+if BOARD_WAFER_LEFT || BOARD_WAFER_RIGHT
 
 config BOARD
     default "wafer"
@@ -82,5 +82,5 @@ endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
 config ZMK_DISPLAY_STATUS_SCREEN_BUILT_IN
     select LV_FONT_MONTSERRAT_26
 
-endif # WAFER
+endif # BOARD_WAFER_LEFT || BOARD_WAFER_RIGHT
 
