@@ -1,13 +1,10 @@
-config BOARD_WAFER_LEFT
-    bool "Wafer Left"
-    default n
-    help
-      Select this option to build for the left side of the Wafer split keyboard.
+choice
+    prompt "Wafer Keyboard"
+    depends on SOC_SERIES_NRF52X
 
-config BOARD_WAFER_RIGHT
-    bool "Wafer Right"
-    default n
-    help
-      Select this option to build for the right side of the Wafer split keyboard.
+source "Kconfig.wafer_left"
+source "Kconfig.wafer_right"
 
+endchoice
 
+source "Kconfig.defconfig"
