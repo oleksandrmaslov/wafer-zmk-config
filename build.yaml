@@ -19,5 +19,5 @@
 ---
 include:
  - board: wafer_left
-   snippet: zmk-usb-logging
+#   snippet: zmk-usb-logging
  - board: wafer_right
