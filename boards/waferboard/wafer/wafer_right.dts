@@ -27,7 +27,6 @@
         };
     };
 
-
     keys {
         compatible = "gpio-keys";
         soft_off_gpio_key: soft_off_gpio_key {
