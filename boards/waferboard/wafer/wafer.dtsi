@@ -92,7 +92,7 @@ display_spi: &spi0 {
         height = <68>;
 
         /* (Load Switch enable) */
-        vin-supply = <&npm1300_ldo1>;
+        // vin-supply = <&npm1300_ldo1>;
     };
 };
 
