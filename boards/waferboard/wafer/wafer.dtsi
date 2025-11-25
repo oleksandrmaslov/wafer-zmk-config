@@ -149,6 +149,7 @@ display_spi: &spi0 {
 
         npm1300_charger: charger {
             compatible = "nordic,npm1300-charger";
+            label = "BATTERY";
             status = "okay";
 
             term-microvolt = <4200000>;
