@@ -52,7 +52,7 @@
 
     EXT_POWER {
         compatible = "zmk,ext-power-generic";
-        control-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_HIGH>;
+        control-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_LOW>;
         init-delay-ms = <50>;
     };
 };
@@ -90,9 +90,7 @@ display_spi: &spi0 {
         reg = <0>;
         width = <160>;
         height = <68>;
-
-        /* (Load Switch enable) */
-        // vin-supply = <&npm1300_ldo1>;
+        vin-supply = <&npm1300_ldo1>;
     };
 };
 
