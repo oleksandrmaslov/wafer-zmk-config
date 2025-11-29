@@ -9,9 +9,6 @@
 };
 
 / {
-&default_transform {
-    col-offset = <5>;  /* number of columns on the left half */
-};
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
         wakeup-source;
