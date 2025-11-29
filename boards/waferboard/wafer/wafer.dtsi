@@ -136,7 +136,6 @@ display_spi: &spi0 {
                 regulator-max-microvolt = <3300000>;
                 regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
                 enable-gpios = <&npm1300_gpio 0 (GPIO_PULL_DOWN | GPIO_ACTIVE_HIGH)>;
-                regulator-boot-on;             
             };
 
             /* Free LDO */
