@@ -90,7 +90,7 @@ display_spi: &spi0 {
         reg = <0>;
         width = <160>;
         height = <68>;
-        vin-supply = <&npm1300_ldo1>;
+        // vin-supply = <&npm1300_ldo1>;
     };
 };
 
