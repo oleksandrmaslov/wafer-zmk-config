@@ -52,7 +52,7 @@
 
     EXT_POWER {
         compatible = "zmk,ext-power-generic";
-        control-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_LOW>;
+        control-gpios = <&gpio0 29 GPIO_ACTIVE_HIGH>;
         init-delay-ms = <50>;
     };
 };
@@ -135,7 +135,7 @@ display_spi: &spi0 {
                 regulator-min-microvolt = <3000000>;
                 regulator-max-microvolt = <3300000>;
                 regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
-                enable-gpios = <&npm1300_gpio 0 (GPIO_ACTIVE_LOW)>;
+                enable-gpios = <&npm1300_gpio 0 (GPIO_ACTIVE_HIGH)>;
                 regulator-boot-on;
             };
 
