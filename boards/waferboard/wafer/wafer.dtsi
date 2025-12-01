@@ -118,8 +118,6 @@ display_spi: &spi0 {
 
         npm1300_regulators: regulators {
             compatible = "nordic,npm1300-regulator";
-            /* P0.29 from the SoC drives nPM1300 GPIO0 for hardware load switch control */
-            dvs-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
 
             npm1300_buck1: BUCK1 {
                 regulator-boot-off;
