@@ -54,7 +54,7 @@
         compatible = "zmk,ext-power-generic";
         /* P0.29 -> nPM1300 GPIO0 to toggle the load switch */
         control-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
-        init-delay-ms = <50>;
+        init-delay-ms = <150>;
     };
 };
 
@@ -91,7 +91,7 @@ display_spi: &spi0 {
         reg = <0>;
         width = <160>;
         height = <68>;
-        // vin-supply = <&npm1300_ldo1>;
+        vin-supply = <&npm1300_ldo1>;
     };
 };
 
