@@ -4,6 +4,10 @@
 
 #include "wafer.dtsi"
 
+&default_transform {
+    col-offset = <5>; 
+};
+
 / {
     kscan0: kscan {
         compatible = "zmk,kscan-gpio-matrix";
