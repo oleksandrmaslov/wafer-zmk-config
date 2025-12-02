@@ -42,7 +42,15 @@
         hw_soft_off: hw_soft_off {
             compatible = "zmk,behavior-soft-off";
             #binding-cells = <0>;
+            split-peripheral-off-on-press;
             hold-time-ms = <3000>;
+        };
+
+        power_btn_combo: power_btn_combo {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <500>;
+            bindings = <&hw_soft_off>, <&bootloader>;
         };
     };
 
@@ -61,7 +69,7 @@
         soft_off {
             column = <0>;
             row = <0>;
-            bindings = <&hw_soft_off>;
+            bindings = <&power_btn_combo>;
         };
     };
 
