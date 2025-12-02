@@ -52,8 +52,9 @@
 
     EXT_POWER {
         compatible = "zmk,ext-power-generic";
-        control-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_HIGH>;
-        init-delay-ms = <50>;
+        /* P0.29 -> nPM1300 GPIO0 to toggle the load switch */
+        control-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
+        init-delay-ms = <150>;
     };
 };
 
@@ -90,9 +91,7 @@ display_spi: &spi0 {
         reg = <0>;
         width = <160>;
         height = <68>;
-
-        /* (Load Switch enable) */
-        // vin-supply = <&npm1300_ldo1>;
+        vin-supply = <&npm1300_ldo1>;
     };
 };
 
@@ -137,8 +136,8 @@ display_spi: &spi0 {
                 regulator-min-microvolt = <3000000>;
                 regulator-max-microvolt = <3300000>;
                 regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
-                enable-gpios = <&npm1300_gpio 0 (GPIO_PULL_UP | GPIO_ACTIVE_LOW)>;
-                regulator-boot-on;             
+                enable-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_LOW>;
+                regulator-boot-on;
             };
 
             /* Free LDO */
