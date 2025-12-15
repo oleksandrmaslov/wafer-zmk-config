@@ -34,6 +34,7 @@ These models are mostly for CNC right now; a tuned 3D-printable and CNC version 
 ![](/assets/IMG_3291.JPG)
 ![Wafer PCB](/assets/IMG_3320.JPG)
 ![Art on the back](/assets/IMG_3324.JPG)
+![Art in KiCAD](/assets/Back_art.png)
 ![Wafer render](/assets/wafer%20render.jpg)
 
 
