@@ -1,32 +1,40 @@
 
-insert big wafer title with the title photo 
+# Wafer
 
-Wafer is a 36 key Ultra-thin split keyboard with only 4-8mm thickness, it was built with isp1807 and npm1300 ICs, Case is made out of full aluminium
+![Wafer title photo](/assets/wafer_title.png)
+
+Wafer is a 36 key ultra-thin split keyboard that stays between 4–8 mm thick. It runs on an ISP1807 with an NPM1300 PMIC, and the full aluminium case snaps together with magnets for a clean profile. Runs ZMK for ultra-low-power
 
 ***
 
 ## LAYOUT
 
-# ![WAFER layout](/assets/wafer_layout.svg)
+![WAFER layout](/assets/wafer_layout_default.svg)
+
+Default layout is shown above; layers and firmware live in this repo.
 
 ***
 
 ## PCB
 
-PCB files will be released soon, as well as cases 
+PCB and case design files will be released soon. Firmware/config live here until the hardware drops.
 
 ***
 
 ## CASE
 
-These mode are barely good for 3d printing, 3d printing version also will be released
+These models are mostly for CNC right now; a tuned 3D-printable and CNC version will be shared soon.
 ***
 
 
 ***
 
 ## PHOTOS
-**enter photos new photos here**
+![side view](/assets/IMG_3287.JPG)
+![](/assets/IMG_3291.JPG)
+![Wafer PCB](/assets/IMG_3320.JPG)
+![Art on the back](/assets/IMG_3324.JPG)
+![Wafer render](/assets/wafer%20render.jpg)
 
 
 ***
@@ -35,11 +43,11 @@ These mode are barely good for 3d printing, 3d printing version also will be rel
 
 ### INSPIRATION
 
-Personally i was inspirated by a [Totem Keyboard](https://github.com/GEIGEIGEIST/TOTEM) and a [Mikehive](https://github.com/mikeholscher/zmk-config-mikefive) but wanted to feature a nice view and magnets for usability. To make this possible I have to aprecciate Rasmus for introdusing me to the isp1807
+Inspired by the [Totem Keyboard](https://github.com/GEIGEIGEIST/TOTEM) and [Mikehive](https://github.com/mikeholscher/zmk-config-mikefive), but with a slimmer profile and magnets for usability. Big thanks to Rasmus for introducing me to the ISP1807.
 
 ### HELP FIXING THINGS
 
-People who helped me create this board and fix stuff
+People who helped me create this board and fix stuff:
 
 #### PCB
 - [Rasmus Koit](https://github.com/rasmuskoit)
