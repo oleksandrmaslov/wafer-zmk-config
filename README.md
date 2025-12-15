@@ -17,7 +17,7 @@ Default layout is shown above; layers and firmware live in this repo.
 
 ## PCB
 
-PCB and case design files will be released soon. Firmware/config live here until the hardware drops.
+[*Here*](/pcb/) you could find the PCB and production files for the Wafer. There are two versions, with mousebites and ready for production and without them.
 
 ***
 
