@@ -1,43 +1,49 @@
-# Wafer Split Keyboard
 
-<div align="center">
-    <img src="assets/wafer.jpg" alt="Wafer Split Keyboard" width="800"/>
-    
-*Ultra-thin. Ultra-comfortable. Ultra-productive.*
-</div>
+insert big wafer title with the title photo 
 
-## Overview
+Wafer is a 36 key Ultra-thin split keyboard with only 4-8mm thickness, it was built with isp1807 and npm1300 ICs, Case is made out of full aluminium
 
-Wafer is a cutting-edge split mechanical keyboard designed for those who demand both elegance and functionality. With its remarkably thin profile, it redefines what's possible in ergonomic keyboard design.
+***
 
-### ✨ Key Features
+## LAYOUT
 
-- **Ultra-thin Profile**: Engineered for maximum comfort with minimal desk footprint
-- **Split Design**: Independent halves for optimal ergonomic positioning
-- **Wireless Freedom**: Bluetooth connectivity for a clean, cable-free setup
-- **ZMK Firmware**: Powered by modern, wireless-first ZMK firmware
-- **Long Battery Life**: Month of battery life design for extended use
-- **Memory-in-pixel Display**: Built-in display for battery, connectivity, and layer status, `and Raw HID functions (to be implemented)`
+# ![WAFER layout](/assets/wafer_layout.svg)
 
-Double tap the power button to open a bootloader, flash both halves with the compiled firmware
+***
 
-Pair your keyboard and enjoy the typing experience!
+## PCB
 
-## Technical Specifications
+PCB files will be released soon, as well as cases 
 
-- **Controller**: ARM-based microcontroller [ISP1807], based on nrf52840
-- **Connectivity**: Bluetooth LE & USB-C
-- **Features**:
-  - Custom status display `(nice!view compatible, custom UI in development)`
-  - Advanced power management
+***
+
+## CASE
+
+These mode are barely good for 3d printing, 3d printing version also will be released
+***
 
 
-## License
+***
 
-This project is released under the [MIT License](LICENSE).
+## PHOTOS
+**enter photos new photos here**
 
----
 
-<div align="center">
-Made with ❤️ by the Oleksandr Maslov
-</div>
+***
+
+## CREDITS
+
+### INSPIRATION
+
+Personally i was inspirated by a [Totem Keyboard](https://github.com/GEIGEIGEIST/TOTEM) and a [Mikehive](https://github.com/mikeholscher/zmk-config-mikefive) but wanted to feature a nice view and magnets for usability. To make this possible I have to aprecciate Rasmus for introdusing me to the isp1807
+
+### HELP FIXING THINGS
+
+People who helped me create this board and fix stuff
+
+#### PCB
+- [Rasmus Koit](https://github.com/rasmuskoit)
+- [Eden](https://github.com/galaxyeden)
+#### CASE
+- [Vlad Vodkin (completely helped to build this case, huge thanks)](https://t.me/vlad30303)
+
