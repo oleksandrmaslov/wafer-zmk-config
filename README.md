@@ -54,5 +54,5 @@ People who helped me create this board and fix stuff:
 - [Rasmus Koit](https://github.com/rasmuskoit)
 - [Eden](https://github.com/galaxyeden)
 #### CASE
-- [Vlad Vodkin (completely helped to build this case, huge thanks)](https://t.me/vlad30303)
+- [Vlad Vodkin (consulted me to build this case, huge thanks)](https://t.me/vlad30303)
 
