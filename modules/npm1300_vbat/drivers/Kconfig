@@ -1,0 +1,3 @@
+# SPDX-License-Identifier: MIT
+
+rsource "sensor/npm1300_vbat/Kconfig"
