@@ -51,3 +51,14 @@ This directory contains the Zephyr/ZMK board definition for the **Wafer** split 
 ## Notes
 
 Most of these files follow conventions documented in the [ZMK docs](https://zmk.dev/docs) and the [Zephyr Hardware Model v2](https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html). They are required to live in this exact folder structure for the ZMK build system to discover the board.
+
+
+## Battery / nPM1300 VBAT
+
+This board reports battery state from a Nordic **nPM1300** PMIC. The standard ZMK `nordic,npm1300-charger` battery binding only exposes charger state, not VBAT, so we ship a small custom Zephyr sensor driver that triggers a VBAT measurement on the PMIC ADC and reports the voltage on `SENSOR_CHAN_GAUGE_VOLTAGE` in millivolts. ZMK then converts that to a battery percentage through its lithium-voltage curve.
+
+The driver lives as a ZMK module in this repo at `modules/npm1300_vbat/` (devicetree binding `zmk,npm1300-vbat`, Kconfig `CONFIG_ZMK_NPM1300_VBAT`). The board's `wafer.dtsi` declares an `npm1300_vbat_sensor` node that takes a phandle to the existing `pmic` (`pmic@6b`) node, and `zmk,battery` in `chosen` points at this sensor. Required Kconfig flags live in `wafer.conf`: `CONFIG_ZMK_BATTERY_REPORTING=y`, `CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE=y`, `CONFIG_ZMK_NPM1300_VBAT=y`.
+
+## Building
+
+The board builds against upstream **`zmkfirmware/zmk@main`**. The west manifest is `config/west.yml` and it imports the upstream `app/west.yml`. GitHub Actions in `.github/workflows/build.yml` runs on every push and produces the left/right firmware artifacts, so build status is visible directly on each commit.
