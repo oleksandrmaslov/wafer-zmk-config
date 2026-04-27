@@ -1,13 +1,14 @@
 manifest:
   remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    # Keep the personal fork remote available in case we need to roll back.
     - name: oleksandrmaslov
       url-base: https://github.com/oleksandrmaslov
-    # Additional modules containing boards/shields/custom code can be listed here as well
-    # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
     - name: zmk
-      remote: oleksandrmaslov
-      revision: core/move-to-zephyr-4-1
+      remote: zmkfirmware
+      revision: main
       import: app/west.yml
   self:
     path: config
