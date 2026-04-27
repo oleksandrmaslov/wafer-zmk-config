@@ -21,6 +21,14 @@ Default layout is shown above; layers and firmware live in this repo.
 
 ***
 
+## BOM
+
+The full Bill of Materials for the Wafer keyboard is available in the repo:
+
+- [BOM (JLCPCB production)](pcb/jlcpcb/production_files/BOM-wafer_keyboard_v3_production.csv)
+- [Keyboard Price breakdown](pcb/Keyboard%20Price.csv)
+***
+
 ## CASE
 
 These models are mostly for CNC right now; a tuned 3D-printable and CNC version will be shared soon.
