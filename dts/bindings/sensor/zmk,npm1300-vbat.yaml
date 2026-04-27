@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: MIT
+
+description: |
+  ZMK custom sensor driver that triggers a VBAT measurement on a Nordic
+  nPM1300 PMIC and exposes the resulting voltage on
+  SENSOR_CHAN_GAUGE_VOLTAGE (millivolts). Pair with
+  CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE so ZMK derives
+  the battery percentage via the lithium curve.
+
+compatible: "zmk,npm1300-vbat"
+
+include: base.yaml
+
+properties:
+  pmic:
+    type: phandle
+    required: true
+    description: |
+      Phandle to the nPM1300 PMIC node (compatible "nordic,npm1300") that
+      this sensor will drive ADC measurements on. The driver reuses the
+      PMIC's i2c_dt_spec to issue ADC task and result reads.
