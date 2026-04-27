@@ -27,7 +27,7 @@
 
         zmk,physical-layout = &wafer_layout_phys;
         zephyr,display = &display;
-        zmk,battery = &npm1300_charger;
+        zmk,battery = &npm1300_vbat_sensor;
     };
 
     default_transform: keymap_transform_0 {
@@ -198,3 +198,18 @@ zephyr_udc0: &usbd {
 };
 
 
+
+
+/*
+ * ZMK custom sensor: triggers VBAT measurement on the nPM1300 PMIC and
+ * exposes SENSOR_CHAN_GAUGE_VOLTAGE in millivolts. Pair with
+ * CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE so ZMK derives
+ * the battery percentage from the lithium curve.
+ */
+/ {
+	npm1300_vbat_sensor: npm1300_vbat_sensor {
+		compatible = "zmk,npm1300-vbat";
+		pmic = <&pmic>;
+		status = "okay";
+	};
+};
