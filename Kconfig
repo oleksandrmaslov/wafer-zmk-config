@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+# Top-level Kconfig for the wafer-zmk-config Zephyr module.
+
+rsource "modules/npm1300_vbat/Kconfig"
