@@ -1,0 +1,7 @@
+name: npm1300_vbat
+build:
+  cmake: .
+    kconfig: Kconfig
+      settings:
+          dts_root: .
+          
