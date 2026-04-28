@@ -48,6 +48,30 @@ These models are mostly for CNC right now; a tuned 3D-printable and CNC version 
 
 ***
 
+## LICENSE
+
+This repository uses a split-license model.
+
+### Software source code and firmware configuration
+
+Software source code and firmware configuration are licensed under the MIT License. See [LICENSE-CODE.md](LICENSE-CODE.md).
+
+### Hardware, PCB, CAD, wafer, case, visuals, and product design
+
+All hardware designs, PCB files, CAD files, Gerber files, 3D models, enclosure designs, wafer designs, layout geometry, visual assets, renders, documentation, product identity, brand elements, and the Wafer keyboard concept are copyright (c) 2026 Oleksandr Maslov. All rights reserved unless explicitly stated otherwise.
+
+These non-software materials are shared only for viewing, documentation, discussion, and personal non-commercial reference. See [LICENSE-HARDWARE.md](LICENSE-HARDWARE.md).
+
+You may share links to this repository.
+
+You may not copy, manufacture, sell, redistribute, remix, modify, reupload, clone for production, or commercially use the hardware/design/wafer files without written permission.
+
+### License clarification
+
+The MIT License applies only to software source code and firmware configuration. It does not apply to hardware designs, wafer designs, keyboard layout geometry, PCB files, CAD files, Gerber files, 3D models, visual assets, documentation, product identity, or the Wafer keyboard concept.
+
+***
+
 ## CREDITS
 
 ### INSPIRATION
