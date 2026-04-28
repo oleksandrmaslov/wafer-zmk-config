@@ -1,43 +1,21 @@
-# Wafer Repository License Notice
+MIT License
 
-This repository uses a split-license model. Different parts of the repository are covered by different licenses.
+Copyright (c) 2025 The ZMK Contributors
+Copyright (c) 2026 Oleksandr Maslov
 
-## 1. Software source code and firmware configuration
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of the software source code and associated software documentation files covered
+by this license (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to permit persons
+to whom the Software is furnished to do so, subject to the following conditions:
 
-Software source code, firmware configuration, and associated software documentation are licensed under the MIT License.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-See: [LICENSE-CODE.md](LICENSE-CODE.md)
-
-MIT copyright notices include:
-
-- Copyright (c) 2025 The ZMK Contributors
-- Copyright (c) 2026 Oleksandr Maslov
-
-The MIT License applies only to software source code, firmware configuration, and associated software documentation, unless another file explicitly states otherwise.
-
-## 2. Hardware, PCB, CAD, wafer, case, visuals, and product design
-
-All non-software materials are copyright (c) 2026 Oleksandr Maslov. All rights reserved unless explicitly stated otherwise.
-
-This includes, but is not limited to:
-
-- keyboard design, layout geometry, key placement, and product concept;
-- PCB designs, schematics, routing, Gerber files, BOM files, and fabrication data;
-- KiCad, EasyEDA, CAD, STEP, STL, DXF, SVG, drawing, and enclosure files;
-- case, plate, wafer, mechanical, visual, and industrial design files;
-- documentation, diagrams, renders, images, graphics, names, branding, and product identity.
-
-See: [LICENSE-HARDWARE.md](LICENSE-HARDWARE.md)
-
-These materials are shared only for viewing, documentation, discussion, and personal non-commercial reference.
-
-You may share links to this repository.
-
-You may not copy, manufacture, sell, redistribute, remix, modify, reupload, clone for production, or commercially use the hardware/design/wafer files without prior written permission from Oleksandr Maslov.
-
-## 3. Scope clarification
-
-The MIT License does not apply to hardware designs, wafer designs, keyboard layout geometry, PCB files, CAD files, Gerber files, 3D models, visual assets, documentation, product identity, or the Wafer keyboard concept.
-
-For the full software MIT license text, see LICENSE-CODE.md.
-For the restricted hardware/design license, see LICENSE-HARDWARE.md.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
