@@ -10,5 +10,10 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+    # Reworked soft off: hold-to-wake + power both halves off together.
+    # Points at the soft-off-plus branch until it is merged to the module's main.
+    - name: zmk-soft-off-plus
+      remote: oleksandrmaslov
+      revision: soft-off-plus
   self:
     path: config

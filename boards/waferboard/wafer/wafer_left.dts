@@ -37,8 +37,9 @@
 
     behaviors {
         hw_soft_off: hw_soft_off {
-            compatible = "zmk,behavior-soft-off";
+            compatible = "zmk,behavior-soft-off-plus";
             #binding-cells = <0>;
+            /* Hold the power key ~3s to turn off; signals the other half too. */
             hold-time-ms = <3000>;
         };
     };
@@ -65,5 +66,15 @@
     soft_off_wakers {
         compatible = "zmk,soft-off-wakeup-sources";
         wakeup-sources = <&wakeup_scan>;
+    };
+
+    /* Boot-time "hold to wake" delay: after waking from soft off, the power key
+     * (P0.03, same pin as soft_off_gpio_key) must be held ~3s or the board
+     * goes straight back to System OFF. */
+    soft_off_plus_wake: soft_off_plus_wake {
+        compatible = "zmk,soft-off-plus-wake";
+        wake-gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+        wake-hold-ms = <3000>;
+        bypass-on-usb;
     };
 };
