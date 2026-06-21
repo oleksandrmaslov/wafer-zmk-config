@@ -14,6 +14,6 @@ manifest:
     # Points at the soft-off-plus branch until it is merged to the module's main.
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
-      revision: soft-off-plus
+      revision: main
   self:
     path: config
