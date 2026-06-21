@@ -45,6 +45,16 @@
             /* Hold the power key ~3s to turn off; signals the other half too. */
             hold-time-ms = <3000>;
         };
+
+        /* Power key gesture: hold -> soft off (both halves); double-tap ->
+         * bootloader/DFU on THIS half. Total off-hold = tapping-term + hold-time
+         * (~3.5s). */
+        power_btn_combo: power_btn_combo {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <500>;
+            bindings = <&hw_soft_off>, <&bootloader>;
+        };
     };
 
     wakeup_scan: wakeup_scan {
@@ -62,7 +72,7 @@
         soft_off {
             column = <0>;
             row = <0>;
-            bindings = <&hw_soft_off>;
+            bindings = <&power_btn_combo>;
         };
     };
 
