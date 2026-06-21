@@ -46,14 +46,23 @@
             hold-time-ms = <3000>;
         };
 
-        /* Power key gesture: hold -> soft off (both halves); double-tap ->
-         * bootloader/DFU on THIS half. Total off-hold = tapping-term + hold-time
-         * (~3.5s). */
+        /* Bootloader only on the half that is actually plugged into USB. */
+        if_usb_bootloader: if_usb_bootloader {
+            compatible = "zmk,behavior-if-usb";
+            #binding-cells = <0>;
+            bindings = <&bootloader>;
+        };
+
+        /* Power key gesture:
+         *   hold       -> soft off (both halves over BLE)
+         *   double-tap -> nothing (reserved)
+         *   triple-tap -> bootloader/DFU, only on the USB-connected half
+         * Triple-tap + USB keeps DFU deliberate, not accidental. */
         power_btn_combo: power_btn_combo {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <500>;
-            bindings = <&hw_soft_off>, <&bootloader>;
+            tapping-term-ms = <300>;
+            bindings = <&hw_soft_off>, <&none>, <&if_usb_bootloader>;
         };
     };
 
