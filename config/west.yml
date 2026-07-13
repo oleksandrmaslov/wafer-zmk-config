@@ -9,9 +9,6 @@ manifest:
       remote: oleksandrmaslov
       revision: core/move-to-zephyr-4-1
       import: app/west.yml
-    - name: zmk-split-hid-display
-      remote: oleksandrmaslov
-      revision: main
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
       revision: main
