@@ -17,11 +17,11 @@
                     <&gpio1 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpio1 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
                     <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
-        col-gpios = <&gpio1 14 GPIO_ACTIVE_HIGH>,
-                    <&gpio1 15 GPIO_ACTIVE_HIGH>,
-                    <&gpio1 6 GPIO_ACTIVE_HIGH>,
+        col-gpios = <&gpio0 8 GPIO_ACTIVE_HIGH>,
                     <&gpio1 2 GPIO_ACTIVE_HIGH>,
-                    <&gpio0 8 GPIO_ACTIVE_HIGH>;
+                    <&gpio1 6 GPIO_ACTIVE_HIGH>,
+                    <&gpio1 15 GPIO_ACTIVE_HIGH>,
+                    <&gpio0 14 GPIO_ACTIVE_HIGH>;
     };
 
     leds {
@@ -38,11 +38,34 @@
         };
     };
 
+/ {
+    keys {
+        compatible = "gpio-keys";
+        soft_off_gpio_key: soft_off_gpio_key {
+            gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* your button pin */
+        };
+    };
+
     behaviors {
         hw_soft_off: hw_soft_off {
-            compatible = "zmk,behavior-soft-off";
+            compatible = "zmk,behavior-soft-off-plus";
             #binding-cells = <0>;
-            hold-time-ms = <3000>;
+            hold-time-ms = <3000>;        /* hold this long to power off */
+        };
+
+        /* &bootloader, but only while THIS half is on USB */
+        if_usb_bootloader: if_usb_bootloader {
+            compatible = "zmk,behavior-if-usb";
+            #binding-cells = <0>;
+            bindings = <&bootloader>;
+        };
+
+        /* hold -> soft off (both halves) | 2 taps -> nothing | 3 taps -> DFU (USB only) */
+        power_btn_combo: power_btn_combo {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&hw_soft_off>, <&none>, <&if_usb_bootloader>;
         };
     };
 
@@ -57,16 +80,24 @@
         kscan = <&wakeup_scan>;
         auto-enable;
         wakeup-source;
-
         soft_off {
             column = <0>;
             row = <0>;
-            bindings = <&hw_soft_off>;
+            bindings = <&power_btn_combo>;
         };
     };
 
+    /* arm the button as a wake source while in soft off */
     soft_off_wakers {
         compatible = "zmk,soft-off-wakeup-sources";
         wakeup-sources = <&wakeup_scan>;
+    };
+
+    /* require a ~3s hold of the same button to actually turn on */
+    soft_off_plus_wake: soft_off_plus_wake {
+        compatible = "zmk,soft-off-plus-wake";
+        wake-gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; /* same pin/flags */
+        wake-hold-ms = <3000>;
+        bypass-on-usb;
     };
 };
