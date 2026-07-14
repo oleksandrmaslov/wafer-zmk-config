@@ -22,3 +22,11 @@ include:
    snippet: zmk-usb-logging
  - board: wafer_right
    snippet: zmk-usb-logging
+ - board: wafer_left
+   snippet: zmk-usb-logging
+   cmake-args: -DCONFIG_ZMK_BLE_CLEAR_BONDS_ON_START=y
+   artifact-name: wafer_left_clear_bonds
+ - board: wafer_right
+   snippet: zmk-usb-logging
+   cmake-args: -DCONFIG_ZMK_BLE_CLEAR_BONDS_ON_START=y
+   artifact-name: wafer_right_clear_bonds
