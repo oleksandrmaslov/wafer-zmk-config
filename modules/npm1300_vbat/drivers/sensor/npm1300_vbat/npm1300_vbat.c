@@ -16,6 +16,7 @@
 #define DT_DRV_COMPAT zmk_npm1300_vbat
 
 #include <errno.h>
+#include <stdbool.h>
 #include <zephyr/kernel.h>
 #include <zephyr/device.h>
 #include <zephyr/devicetree.h>
@@ -95,11 +96,16 @@ struct npm1300_vbat_data {
     int vbat_mv;
 };
 
+static bool npm1300_vbat_channel_supported(enum sensor_channel chan)
+{
+    return chan == SENSOR_CHAN_VOLTAGE || chan == SENSOR_CHAN_GAUGE_VOLTAGE;
+}
+
 static int npm1300_vbat_sample_fetch(const struct device *dev, enum sensor_channel chan)
 {
     struct npm1300_vbat_data *data = dev->data;
 
-    if (chan != SENSOR_CHAN_ALL && chan != SENSOR_CHAN_GAUGE_VOLTAGE) {
+    if (chan != SENSOR_CHAN_ALL && !npm1300_vbat_channel_supported(chan)) {
         return -ENOTSUP;
     }
 
@@ -117,7 +123,7 @@ static int npm1300_vbat_channel_get(const struct device *dev, enum sensor_channe
 {
     struct npm1300_vbat_data *data = dev->data;
 
-    if (chan != SENSOR_CHAN_GAUGE_VOLTAGE) {
+    if (!npm1300_vbat_channel_supported(chan)) {
         return -ENOTSUP;
     }
 
