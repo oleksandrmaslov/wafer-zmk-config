@@ -95,6 +95,14 @@ display_spi: &spi0 {
     };
 };
 
+/ {
+    rawhid_or: rawhid_or {
+        compatible = "zmk,split-peripheral-output-relay";
+        relay-channel = <1>;
+        device = <&display>;
+    };
+};
+
 /* I2C1: nPM1300, BAT_I2C_SCL=P0.02, BAT_I2C_SDA=P0.31 */
 
 &i2c1 {

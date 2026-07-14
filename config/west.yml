@@ -8,7 +8,13 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: 904c9aec8822d79149d42c8a9a77e8828eb08f5a
       import: app/west.yml
+    - name: zmk-soft-off-plus
+      remote: oleksandrmaslov
+      revision: 03711e12190f2f22ee9fd73e4caaf1848cae978c
+    - name: zmk-split-hid-display
+      remote: oleksandrmaslov
+      revision: ab5e2a72a8ac4039ed472a5a280b60cd955b0cf5
   self:
     path: config
