@@ -92,6 +92,10 @@ display_spi: &spi0 {
         reg = <0>;
         width = <160>;
         height = <68>;
+        /* nice!view has no EXTCOMIN connection, so the LS0xx driver must
+         * invert VCOM over SPI. Match ZMK's standard nice_view overlay. */
+        serial-vcom-inversion;
+        serial-vcom-interval = <33>;
         vin-supply = <&npm1300_ldo1>;
     };
 };
@@ -147,6 +151,10 @@ display_spi: &spi0 {
                 regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
                 enable-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_LOW>;
                 regulator-boot-on;
+                /* EXT_POWER waits before nPM1300 finishes configuring GPIO
+                 * control. If LDO1 was initially off, give it the same settle
+                 * time here before the display initializes. */
+                startup-delay-us = <150000>;
             };
 
             /* Free LDO */
