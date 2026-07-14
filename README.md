@@ -17,16 +17,16 @@ Default layout is shown above; layers and firmware live in this repo.
 
 ## PCB
 
-[*Here*](/pcb/) you could find the PCB and production files for the Wafer. There are two versions, with mousebites and ready for production and without them.
+[*Here*](https://github.com/oleksandrmaslov/wafer-zmk-config/tree/main/pcb) you could find the PCB and production files for the Wafer (kept on the `main` branch; this firmware branch only carries the ZMK config). There are two versions, with mousebites and ready for production and without them.
 
 ***
 
 ## BOM
 
-The full Bill of Materials for the Wafer keyboard is available in the repo:
+The full Bill of Materials for the Wafer keyboard is available on the `main` branch:
 
-- [BOM (JLCPCB production)](pcb/jlcpcb/production_files/BOM-wafer_keyboard_v3_production.csv)
-- [Keyboard Price breakdown](pcb/Keyboard%20Price.csv)
+- [BOM (JLCPCB production)](https://github.com/oleksandrmaslov/wafer-zmk-config/blob/main/pcb/jlcpcb/production_files/BOM-wafer_keyboard_v3_production.csv)
+- [Keyboard Price breakdown](https://github.com/oleksandrmaslov/wafer-zmk-config/blob/main/pcb/Keyboard%20Price.csv)
 ***
 
 ## CASE
