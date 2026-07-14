@@ -52,11 +52,11 @@
             bindings = <&bootloader>;
         };
 
-        power_btn_combo: power_btn_combo {
-            compatible = "zmk,behavior-tap-dance";
+        power_btn_combo: pwr_cmb {
+            compatible = "zmk,behavior-power-button";
             #binding-cells = <0>;
             tapping-term-ms = <300>;
-            bindings = <&hw_soft_off>, <&none>, <&if_usb_dfu>;
+            bindings = <&hw_soft_off>, <&if_usb_dfu>;
         };
     };
 

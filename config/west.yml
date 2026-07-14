@@ -7,12 +7,12 @@ manifest:
       url-base: https://github.com/oleksandrmaslov
   projects:
     - name: zmk
-      remote: oleksandrmaslov
-      revision: 6c425816ce53d754239ce7f65f7cd6b9075d20dd
+      remote: zmkfirmware
+      revision: 904c9aec8822d79149d42c8a9a77e8828eb08f5a
       import: app/west.yml
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
-      revision: bb74b94b84c1ab78d2d11a509e63528c4e7cbd6c
+      revision: 9271d8654656a1c8015e95d027ccce3874361999
     - name: zmk-split-hid-display
       remote: oleksandrmaslov
       revision: ab5e2a72a8ac4039ed472a5a280b60cd955b0cf5
