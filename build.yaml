@@ -18,12 +18,19 @@
 #
 ---
 include:
- - board: wafer_left
-   # snippet: zmk-usb-logging
- - board: wafer_right
- - board: wafer_left
-   cmake-args: -DCONFIG_ZMK_BLE_CLEAR_BONDS_ON_START=y
-   artifact-name: wafer_left_clear_bonds
- - board: wafer_right
-   cmake-args: -DCONFIG_ZMK_BLE_CLEAR_BONDS_ON_START=y
-   artifact-name: wafer_right_clear_bonds
+  # Main firmware. ZMK Studio only runs on the central (left) half.
+  - board: wafer_left
+    snippet: studio-rpc-usb-uart
+    cmake-args: -DCONFIG_ZMK_STUDIO=y
+  - board: wafer_right
+  # Recovery firmware: wipes all persistent settings (BLE bonds, Studio keymap
+  # changes) on every boot. Flash to both halves, let them boot once, then
+  # flash the normal firmware again. This is the same mechanism the
+  # settings_reset shield enables; the shield itself cannot be stacked on a
+  # standalone board like the wafer.
+  - board: wafer_left
+    cmake-args: -DCONFIG_ZMK_SETTINGS_RESET_ON_START=y
+    artifact-name: wafer_left_settings_reset
+  - board: wafer_right
+    cmake-args: -DCONFIG_ZMK_SETTINGS_RESET_ON_START=y
+    artifact-name: wafer_right_settings_reset
