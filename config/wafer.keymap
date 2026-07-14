@@ -70,7 +70,7 @@
 
             bindings = <
 &kp Q                &kp W                &kp E             &kp R                  &kp T                     &kp Y        &kp U                  &kp I             &kp O            &kp P
-&mod_tap A LEFT_WIN  &mod_tap S LEFT_ALT  &mod_tap D LCTRL  &mod_tap F LEFT_SHIFT  &kp G                     &kp H        &mod_tap J LEFT_SHIFT  &mod_tap K LCTRL  &mod_tap L LALT  &mod_tap SEMI LEFT_WIN
+&mod_tap LEFT_WIN A  &mod_tap LEFT_ALT S  &mod_tap LCTRL D  &mod_tap LEFT_SHIFT F  &kp G                     &kp H        &mod_tap LEFT_SHIFT J  &mod_tap LCTRL K  &mod_tap LALT L  &mod_tap LEFT_WIN SEMI
 &kp Z                &kp X                &kp C             &kp V                  &kp B                     &kp N        &kp M                  &kp COMMA         &kp DOT          &kp FSLH
                                                             &lt 1 LA(LEFT_SHIFT)   &lt 2 TAB  &lt 3 SPACE    &lt 4 ENTER  &kp BACKSPACE          &lt 5 ESCAPE
             >;
