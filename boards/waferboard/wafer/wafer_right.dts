@@ -39,10 +39,11 @@
     };
 
     behaviors {
-        hw_soft_off: hw_soft_off {
+        hw_soft_off: sop {
             compatible = "zmk,behavior-soft-off-plus";
             #binding-cells = <0>;
             hold-time-ms = <2700>;
+            trigger-on-hold;
         };
 
         if_usb_dfu: if_usb_dfu {
