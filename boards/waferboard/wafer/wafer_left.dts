@@ -39,7 +39,20 @@
         hw_soft_off: hw_soft_off {
             compatible = "zmk,behavior-soft-off-plus";
             #binding-cells = <0>;
-            hold-time-ms = <3000>;
+            hold-time-ms = <2700>;
+        };
+
+        if_usb_dfu: if_usb_dfu {
+            compatible = "zmk,behavior-if-usb";
+            #binding-cells = <0>;
+            bindings = <&bootloader>;
+        };
+
+        power_btn_combo: power_btn_combo {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&hw_soft_off>, <&none>, <&if_usb_dfu>;
         };
     };
 
@@ -58,7 +71,7 @@
         soft_off {
             column = <0>;
             row = <0>;
-            bindings = <&hw_soft_off>;
+            bindings = <&power_btn_combo>;
         };
     };
 

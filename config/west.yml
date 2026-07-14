@@ -12,7 +12,7 @@ manifest:
       import: app/west.yml
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
-      revision: 03711e12190f2f22ee9fd73e4caaf1848cae978c
+      revision: dcd452b4f2dc9b2f9e285df16ea3a7b54c2d8b6b
     - name: zmk-split-hid-display
       remote: oleksandrmaslov
       revision: ab5e2a72a8ac4039ed472a5a280b60cd955b0cf5
