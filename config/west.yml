@@ -7,8 +7,8 @@ manifest:
       url-base: https://github.com/oleksandrmaslov
   projects:
     - name: zmk
-      remote: zmkfirmware
-      revision: 904c9aec8822d79149d42c8a9a77e8828eb08f5a
+      remote: oleksandrmaslov
+      revision: 6c425816ce53d754239ce7f65f7cd6b9075d20dd
       import: app/west.yml
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
