@@ -62,6 +62,7 @@ config ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
 
 config NICE_VIEW_WIDGET_STATUS
     bool "Custom nice!view status widget"
+    depends on !NICE_VIEW_HID
     select LV_FONT_MONTSERRAT_16
     select LV_USE_IMG
     select LV_USE_CANVAS

@@ -31,13 +31,13 @@
     keys {
         compatible = "gpio-keys";
         soft_off_gpio_key: soft_off_gpio_key {
-            gpios = <&gpio0 3 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+            gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
         };
     };
 
     behaviors {
         hw_soft_off: hw_soft_off {
-            compatible = "zmk,behavior-soft-off";
+            compatible = "zmk,behavior-soft-off-plus";
             #binding-cells = <0>;
             hold-time-ms = <3000>;
         };
@@ -65,5 +65,12 @@
     soft_off_wakers {
         compatible = "zmk,soft-off-wakeup-sources";
         wakeup-sources = <&wakeup_scan>;
+    };
+
+    soft_off_plus_wake: soft_off_plus_wake {
+        compatible = "zmk,soft-off-plus-wake";
+        wake-gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        wake-hold-ms = <3000>;
+        bypass-on-usb;
     };
 };
