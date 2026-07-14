@@ -18,10 +18,8 @@
 #
 ---
 include:
-  # Main firmware. ZMK Studio only runs on the central (left) half.
+  # Main firmware.
   - board: wafer_left
-    snippet: studio-rpc-usb-uart
-    cmake-args: -DCONFIG_ZMK_STUDIO=y
   - board: wafer_right
   # Recovery firmware: wipes all persistent settings (BLE bonds, Studio keymap
   # changes) on every boot. Flash to both halves, let them boot once, then
