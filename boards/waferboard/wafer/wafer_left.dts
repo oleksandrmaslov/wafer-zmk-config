@@ -39,7 +39,7 @@
         hw_soft_off: sop {
             compatible = "zmk,behavior-soft-off-plus";
             #binding-cells = <0>;
-            hold-time-ms = <2700>;
+            hold-time-ms = <1500>;
             trigger-on-hold;
         };
 
