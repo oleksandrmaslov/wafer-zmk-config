@@ -21,6 +21,12 @@ include:
   # Main firmware.
   - board: wafer_left
   - board: wafer_right
+  # Diagnostic image: central with USB logging for chasing the typing freeze.
+  # Flash to the left half, open its USB serial port (e.g. PuTTY, 115200),
+  # and capture the log around a freeze.
+  - board: wafer_left
+    snippet: zmk-usb-logging
+    artifact-name: wafer_left_usb_logging
   # Recovery firmware: wipes all persistent settings (BLE bonds, Studio keymap
   # changes) on every boot. Flash to both halves, let them boot once, then
   # flash the normal firmware again. This is the same mechanism the
