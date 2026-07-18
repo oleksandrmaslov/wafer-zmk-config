@@ -1,0 +1,28 @@
+# Copyright (c) 2020 Rohit Gujarathi
+# SPDX-FileCopyrightText: Copyright The Zephyr Project Contributors
+# Copyright (c) 2026 Oleksandr Maslov
+# SPDX-License-Identifier: Apache-2.0
+
+config WAFER_LS0XX_SAFE
+	bool "Wafer-safe LS0xx memory display controller driver"
+	default y
+	depends on DISPLAY && DT_HAS_WAFER_LS0XX_SAFE_ENABLED
+	select SPI
+	help
+	  Enable the Wafer-local Sharp LS0xx driver with serialized SPI/VCOM
+	  access and balanced lock ownership.
+
+config WAFER_LS0XX_VCOM_THREAD_PRIO
+	int "Priority for the Wafer LS0xx VCOM inversion thread"
+	default 11
+	depends on WAFER_LS0XX_SAFE
+	help
+	  Set the priority of the periodic serial VCOM inversion thread.
+
+config WAFER_LS0XX_VCOM_THREAD_STACK_SIZE
+	int "Stack size for the Wafer LS0xx VCOM inversion thread"
+	default 1024
+	range 512 4096
+	depends on WAFER_LS0XX_SAFE
+	help
+	  Stack size in bytes for the serial VCOM inversion thread.
