@@ -26,14 +26,6 @@
 
 LOG_MODULE_REGISTER(npm1300_vbat, CONFIG_SENSOR_LOG_LEVEL);
 
-#define NPM1300_NODE DT_NODELABEL(pmic)
-
-#if !DT_NODE_HAS_STATUS(NPM1300_NODE, okay)
-#error "nPM1300 pmic node not found or not okay"
-#endif
-
-static const struct i2c_dt_spec npm1300_i2c = I2C_DT_SPEC_GET(NPM1300_NODE);
-
 #define NPM1300_ADC_BANK 0x05
 
 #define NPM1300_REG_TASKVBATMEASURE 0x00
@@ -43,14 +35,23 @@ static const struct i2c_dt_spec npm1300_i2c = I2C_DT_SPEC_GET(NPM1300_NODE);
 #define NPM1300_VBAT_FULL_SCALE_MV 5000
 #define NPM1300_VBAT_ADC_STEPS 1023 /* 10-bit ADC: 2^10 - 1 */
 
-int zmk_npm1300_read_vbat_mv(int *out_mv) {
-    if (!device_is_ready(npm1300_i2c.bus)) {
+struct npm1300_vbat_config {
+    struct i2c_dt_spec i2c;
+};
+
+static int npm1300_read_vbat_mv(const struct device *dev, int *out_mv) {
+    const struct npm1300_vbat_config *config = dev->config;
+
+    if (out_mv == NULL) {
+        return -EINVAL;
+    }
+    if (!device_is_ready(config->i2c.bus)) {
         LOG_ERR("nPM1300 I2C bus not ready");
         return -ENODEV;
     }
 
     uint8_t tx[3] = {NPM1300_ADC_BANK, NPM1300_REG_TASKVBATMEASURE, 0x01};
-    int ret = i2c_write_dt(&npm1300_i2c, tx, sizeof(tx));
+    int ret = i2c_write_dt(&config->i2c, tx, sizeof(tx));
     if (ret != 0) {
         LOG_ERR("Failed to trigger VBAT measurement: %d", ret);
         return ret;
@@ -61,7 +62,7 @@ int zmk_npm1300_read_vbat_mv(int *out_mv) {
 
     uint8_t addr[2] = {NPM1300_ADC_BANK, NPM1300_REG_ADCVBATRESULTMSB};
     uint8_t msb;
-    ret = i2c_write_read_dt(&npm1300_i2c, addr, sizeof(addr), &msb, 1);
+    ret = i2c_write_read_dt(&config->i2c, addr, sizeof(addr), &msb, 1);
     if (ret != 0) {
         LOG_ERR("Failed to read VBAT MSB: %d", ret);
         return ret;
@@ -69,7 +70,7 @@ int zmk_npm1300_read_vbat_mv(int *out_mv) {
 
     addr[1] = NPM1300_REG_ADCGP0RESULTLSBS;
     uint8_t lsb;
-    ret = i2c_write_read_dt(&npm1300_i2c, addr, sizeof(addr), &lsb, 1);
+    ret = i2c_write_read_dt(&config->i2c, addr, sizeof(addr), &lsb, 1);
     if (ret != 0) {
         LOG_ERR("Failed to read VBAT LSB: %d", ret);
         return ret;
@@ -82,9 +83,7 @@ int zmk_npm1300_read_vbat_mv(int *out_mv) {
         mv = 0;
     }
 
-    if (out_mv != NULL) {
-        *out_mv = (int)mv;
-    }
+    *out_mv = (int)mv;
 
     LOG_DBG("nPM1300 VBAT: ADC=%u -> %d mV", vbat_adc, (int)mv);
     return 0;
@@ -110,7 +109,7 @@ static int npm1300_vbat_sample_fetch(const struct device *dev, enum sensor_chann
     }
 
     int mv = 0;
-    int ret = zmk_npm1300_read_vbat_mv(&mv);
+    int ret = npm1300_read_vbat_mv(dev, &mv);
     if (ret) {
         return ret;
     }
@@ -138,7 +137,9 @@ static const struct sensor_driver_api npm1300_vbat_api = {
 };
 
 static int npm1300_vbat_init(const struct device *dev) {
-    if (!device_is_ready(npm1300_i2c.bus)) {
+    const struct npm1300_vbat_config *config = dev->config;
+
+    if (!device_is_ready(config->i2c.bus)) {
         LOG_ERR("nPM1300 I2C bus not ready");
         return -ENODEV;
     }
@@ -147,7 +148,11 @@ static int npm1300_vbat_init(const struct device *dev) {
 
 #define NPM1300_VBAT_INIT(inst)                                                                 \
     static struct npm1300_vbat_data npm1300_vbat_data_##inst;                                  \
-    DEVICE_DT_INST_DEFINE(inst, npm1300_vbat_init, NULL, &npm1300_vbat_data_##inst, NULL,      \
+    static const struct npm1300_vbat_config npm1300_vbat_config_##inst = {                      \
+        .i2c = I2C_DT_SPEC_GET(DT_PHANDLE(DT_DRV_INST(inst), pmic)),                            \
+    };                                                                                          \
+    DEVICE_DT_INST_DEFINE(inst, npm1300_vbat_init, NULL, &npm1300_vbat_data_##inst,             \
+                          &npm1300_vbat_config_##inst,                                           \
                           POST_KERNEL, CONFIG_SENSOR_INIT_PRIORITY, &npm1300_vbat_api);
 
 DT_INST_FOREACH_STATUS_OKAY(NPM1300_VBAT_INIT)
