@@ -6,15 +6,42 @@ manifest:
     - name: oleksandrmaslov
       url-base: https://github.com/oleksandrmaslov
   projects:
+    # ZMK's imported manifest normally tracks the moving
+    # v4.1.0+zmk-fixes branch. Define Zephyr first so west keeps this exact,
+    # validated revision instead.
+    - name: zephyr
+      remote: zmkfirmware
+      revision: 9df4b12b5af3438a8b9d7a33780dc3b3b2f516c1
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      # Keep firmware inputs reproducible; update this SHA deliberately after
+      # validating the complete Wafer build matrix.
+      revision: c77aa1c877cfd1e55c7733e2207affa1a90bc9aa
       import: app/west.yml
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
       revision: 822aa0b6c970ec08b19ab0ba056098dcba6bfa46
     - name: zmk-split-hid-display
       remote: oleksandrmaslov
-      revision: 023b68abb0d2b4d49fd5e66874f5c77c8f9b47ef
+      revision: 84f78d7a94a7e01e1a6df8d7fc39180be57122a2
   self:
     path: config

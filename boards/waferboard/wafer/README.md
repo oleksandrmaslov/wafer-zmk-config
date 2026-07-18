@@ -59,6 +59,20 @@ This board reports battery state from a Nordic **nPM1300** PMIC. The standard ZM
 
 The driver lives as a ZMK module in this repo at `modules/npm1300_vbat/` (devicetree binding `zmk,npm1300-vbat`, Kconfig `CONFIG_ZMK_NPM1300_VBAT`). The board's `wafer.dtsi` declares an `npm1300_vbat_sensor` node that takes a phandle to the existing `pmic` (`pmic@6b`) node, and `zmk,battery` in `chosen` points at this sensor. Required Kconfig flags live in `wafer.conf`: `CONFIG_ZMK_BATTERY_REPORTING=y`, `CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE=y`, `CONFIG_ZMK_NPM1300_VBAT=y`.
 
+## Display driver
+
+Wafer uses the board-local `wafer,ls0xx-safe` display driver in
+`modules/wafer_ls0xx/`. It keeps the nice!view serial VCOM interval at 33 ms
+while ensuring that SPI and mutex ownership remain balanced when a display
+transaction times out. The dedicated VCOM thread uses a configurable 1024-byte
+stack by default (`CONFIG_WAFER_LS0XX_VCOM_THREAD_STACK_SIZE`).
+
 ## Building
 
-The board builds against upstream **`zmkfirmware/zmk@main`**. The west manifest is `config/west.yml` and it imports the upstream `app/west.yml`. GitHub Actions in `.github/workflows/build.yml` runs on every push and produces the left/right firmware artifacts, so build status is visible directly on each commit.
+The board builds against pinned upstream revisions: ZMK
+`c77aa1c877cfd1e55c7733e2207affa1a90bc9aa` and Zephyr
+`9df4b12b5af3438a8b9d7a33780dc3b3b2f516c1`. The west manifest is
+`config/west.yml`; dependency SHAs and the reusable workflow pin are updated
+deliberately only after the complete Wafer build matrix passes. GitHub Actions
+in `.github/workflows/build.yml` runs on pushes, pull requests, and manual
+dispatches and produces the left/right firmware artifacts.
