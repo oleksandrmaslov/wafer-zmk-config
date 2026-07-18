@@ -1,0 +1,45 @@
+# Copyright (c) 2020 Rohit Gujarathi
+# Copyright (c) 2026 Oleksandr Maslov
+# SPDX-License-Identifier: Apache-2.0
+
+description: Wafer-safe Sharp memory display controller
+
+compatible: "wafer,ls0xx-safe"
+
+include: [spi-device.yaml, display-controller.yaml]
+
+properties:
+  extcomin-gpios:
+    type: phandle-array
+    description: EXTCOMIN pin
+
+      The EXTCOMIN pin receives a square pulse for toggling VCOM.
+
+  extcomin-frequency:
+    type: int
+    description: EXTCOMIN pin toggle frequency
+
+      The frequency with which the EXTCOMIN pin is toggled. See the
+      datasheet for the particular display.
+
+  disp-en-gpios:
+    type: phandle-array
+    description: DISPLAY pin
+
+      The DISPLAY pin controls whether the LCD displays memory contents or
+      a white screen. If defined, it is driven high during initialization.
+
+  serial-vcom-inversion:
+    type: boolean
+    description: Send serial VCOM inversion commands
+
+      Enable when EXTCOMIN is not connected and VCOM inversion is not
+      managed by the application.
+
+  serial-vcom-interval:
+    type: int
+    default: 1000
+    description: Serial VCOM inversion interval in milliseconds
+
+      This interval is used when EXTCOMIN is absent and serial VCOM
+      inversion is enabled.
