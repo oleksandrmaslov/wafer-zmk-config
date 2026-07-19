@@ -87,7 +87,7 @@ display_spi: &spi0 {
     cs-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
 
     display: ls0xx@0 {
-        compatible = "wafer,ls0xx-safe";
+        compatible = "sharp,ls0xx";
         spi-max-frequency = <1000000>;
         reg = <0>;
         width = <160>;
