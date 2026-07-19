@@ -6,31 +6,7 @@ manifest:
     - name: oleksandrmaslov
       url-base: https://github.com/oleksandrmaslov
   projects:
-    # ZMK's imported manifest normally tracks the moving
-    # v4.1.0+zmk-fixes branch. Define Zephyr first so west keeps this exact,
-    # validated revision instead.
-    - name: zephyr
-      remote: zmkfirmware
-      revision: 9df4b12b5af3438a8b9d7a33780dc3b3b2f516c1
-      import:
-        name-blocklist:
-          - ci-tools
-          - hal_altera
-          - hal_cypress
-          - hal_infineon
-          - hal_microchip
-          - hal_nxp
-          - hal_openisa
-          - hal_xtensa
-          - hal_st
-          - hal_ti
-          - loramac-node
-          - mcuboot
-          - mcumgr
-          - net-tools
-          - openthread
-          - edtt
-          - trusted-firmware-m
+    # ZMK's imported manifest supplies Zephyr; do not declare it again here.
     - name: zmk
       remote: zmkfirmware
       # Keep firmware inputs reproducible; update this SHA deliberately after
