@@ -59,12 +59,20 @@ This board reports battery state from a Nordic **nPM1300** PMIC. The standard ZM
 
 The driver lives as a ZMK module in this repo at `modules/npm1300_vbat/` (devicetree binding `zmk,npm1300-vbat`, Kconfig `CONFIG_ZMK_NPM1300_VBAT`). The board's `wafer.dtsi` declares an `npm1300_vbat_sensor` node that takes a phandle to the existing `pmic` (`pmic@6b`) node, and `zmk,battery` in `chosen` points at this sensor. Required Kconfig flags live in `wafer.conf`: `CONFIG_ZMK_BATTERY_REPORTING=y`, `CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE=y`, `CONFIG_ZMK_NPM1300_VBAT=y`.
 
+The display load-switch control is active-high on both P0.29 and nPM1300 GPIO0.
+This makes the PMIC GPIO's default weak pull-down a fail-safe off state during
+reset and the hold-to-wake gate. Keep `regulator-boot-on` and
+`startup-delay-us`: together they enable and settle an initially-off display
+rail before the LS0xx driver initializes.
+
 ## Building
 
 Firmware inputs are pinned in `config/west.yml`: ZMK at
 `c77aa1c877cfd1e55c7733e2207affa1a90bc9aa`, Zephyr at
-`10ba6d0cb38bc3d258775d27982f707599320085`, and the split-HID display module
+`10ba6d0cb38bc3d258775d27982f707599320085`, soft-off-plus at
+`9b2f3fe38568dde5e6473563f7be9f0acb98f5c2`, and the split-HID display module
 at `9606126053c2841696d181668953cbacde9511e4`. The Zephyr revision includes
-the controller fix for long-uptime nRF split-central lockups. GitHub Actions in
-`.github/workflows/build.yml` uses the same pinned ZMK revision and produces
-the left/right firmware artifacts.
+the controller fix for long-uptime nRF split-central lockups; the soft-off-plus
+revision hardens its split connection lifecycle. GitHub Actions in
+`.github/workflows/build.yml` uses the same pinned revisions and produces the
+left/right firmware artifacts.
