@@ -61,4 +61,10 @@ The driver lives as a ZMK module in this repo at `modules/npm1300_vbat/` (device
 
 ## Building
 
-The board builds against upstream **`zmkfirmware/zmk@main`**. The west manifest is `config/west.yml` and it imports the upstream `app/west.yml`. GitHub Actions in `.github/workflows/build.yml` runs on every push and produces the left/right firmware artifacts, so build status is visible directly on each commit.
+Firmware inputs are pinned in `config/west.yml`: ZMK at
+`c77aa1c877cfd1e55c7733e2207affa1a90bc9aa`, Zephyr at
+`10ba6d0cb38bc3d258775d27982f707599320085`, and the split-HID display module
+at `9606126053c2841696d181668953cbacde9511e4`. The Zephyr revision includes
+the controller fix for long-uptime nRF split-central lockups. GitHub Actions in
+`.github/workflows/build.yml` uses the same pinned ZMK revision and produces
+the left/right firmware artifacts.

@@ -6,15 +6,45 @@ manifest:
     - name: oleksandrmaslov
       url-base: https://github.com/oleksandrmaslov
   projects:
+    # Import ZMK first so its tested LVGL and HAL revisions keep precedence.
+    # Zephyr is excluded from that import and pinned explicitly below.
     - name: zmk
       remote: zmkfirmware
-      revision: main
-      import: app/west.yml
+      revision: c77aa1c877cfd1e55c7733e2207affa1a90bc9aa
+      import:
+        file: app/west.yml
+        name-blocklist:
+          - zephyr
+    # This controller revision fixes the nRF split-central prepare pipeline
+    # overflow while retaining ZMK's other imported dependency revisions.
+    - name: zephyr
+      remote: zmkfirmware
+      revision: 10ba6d0cb38bc3d258775d27982f707599320085
+      clone-depth: 1
+      import:
+        name-blocklist:
+          - ci-tools
+          - hal_altera
+          - hal_cypress
+          - hal_infineon
+          - hal_microchip
+          - hal_nxp
+          - hal_openisa
+          - hal_xtensa
+          - hal_st
+          - hal_ti
+          - loramac-node
+          - mcuboot
+          - mcumgr
+          - net-tools
+          - openthread
+          - edtt
+          - trusted-firmware-m
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
       revision: 822aa0b6c970ec08b19ab0ba056098dcba6bfa46
     - name: zmk-split-hid-display
       remote: oleksandrmaslov
-      revision: main
+      revision: 9606126053c2841696d181668953cbacde9511e4
   self:
     path: config
