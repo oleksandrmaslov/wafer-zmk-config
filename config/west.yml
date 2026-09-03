@@ -42,7 +42,7 @@ manifest:
           - trusted-firmware-m
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
-      revision: 822aa0b6c970ec08b19ab0ba056098dcba6bfa46
+      revision: 9b2f3fe38568dde5e6473563f7be9f0acb98f5c2
     - name: zmk-split-hid-display
       remote: oleksandrmaslov
       revision: 9606126053c2841696d181668953cbacde9511e4
