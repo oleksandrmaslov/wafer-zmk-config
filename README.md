@@ -8,8 +8,7 @@ the full aluminium case snaps together with magnets for a clean profile.
 Kailh PG1316S switches, a nice!view display and a 250 mAh LiPo in each half.
 It runs ZMK over Bluetooth LE or USB.
 
-The electronics and firmware work. The case has been made, but fit and
-manufacturing tolerances still need work. More photos and the full story are on
+More photos and the full story are on
 [the project page](https://oleksandrmaslov.github.io/portfolio/Wafer.html).
 
 ***
@@ -39,16 +38,15 @@ run to build that version too.
 
 [Build and flashing guide](docs/building.md) ·
 [Board files](boards/waferboard/wafer/README.md) ·
-[Build validation](docs/validation.md) · [Branch notes](docs/branches.md)
+[Build validation](docs/validation.md)
 
 ***
 
 ## PCB
 
-The PCB and production files now live in the separate `wafer-keyboard` repo,
-under `pcb/`. There are two versions, with mousebites for production and without
-them. The hardware repo is still local at `../wafer-keyboard/`; I'll add its
-public link once it is published.
+[Here](https://github.com/oleksandrmaslov/wafer-keyboard/tree/main/pcb) you can
+find the PCB and production files in the separate `wafer-keyboard` repo. There
+are two versions, with mousebites for production and without them.
 
 ![Wafer PCB with the switches, displays and electronics fitted](assets/IMG_3320.JPG)
 
@@ -56,19 +54,22 @@ public link once it is published.
 
 ## BOM
 
-The full Bill of Materials is in `wafer-keyboard/pcb/`:
+The full Bill of Materials is in the hardware repo:
 
-- BOM for JLCPCB assembly: `jlcpcb/production_files/BOM-wafer_keyboard_v3_production.csv`
-- Component placement: `jlcpcb/production_files/CPL-wafer_keyboard_v3_production.csv`
-- Original prototype price breakdown: `Keyboard Price.csv`
+- [BOM (JLCPCB production)](https://github.com/oleksandrmaslov/wafer-keyboard/blob/main/pcb/jlcpcb/production_files/BOM-wafer_keyboard_v3_production.csv)
+- [Component placement](https://github.com/oleksandrmaslov/wafer-keyboard/blob/main/pcb/jlcpcb/production_files/CPL-wafer_keyboard_v3_production.csv)
+- [Original price breakdown](https://github.com/oleksandrmaslov/wafer-keyboard/blob/main/pcb/Keyboard%20Price.csv)
 
 ***
 
 ## CASE
 
-These models are mostly for CNC right now. The left and right STEP files and the
-thread drawing are in `wafer-keyboard/case/`. The enclosure has been produced and
-iterated, but the fit and tolerances still need refining before another run.
+These models are for CNC:
+
+- [Left case STEP](https://github.com/oleksandrmaslov/wafer-keyboard/blob/main/case/wafer_case_left.step)
+- [Right case STEP](https://github.com/oleksandrmaslov/wafer-keyboard/blob/main/case/wafer_case_right.step)
+- [Thread drawing](https://github.com/oleksandrmaslov/wafer-keyboard/blob/main/case/Wafer%20threads%20drawing.pdf)
+
 See the [hardware repo guide](docs/hardware-repository.md) for the file split and
 personal-build permissions.
 

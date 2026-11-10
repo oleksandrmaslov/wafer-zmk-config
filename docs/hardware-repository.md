@@ -1,7 +1,7 @@
 # Wafer keyboard repository and licensing
 
-The PCB and case sources are in the separate local Git repository
-`/home/oleksandr/projects/wafer-keyboard`. It has not been published to GitHub yet.
+The PCB and case sources are in the separate
+[wafer-keyboard repository](https://github.com/oleksandrmaslov/wafer-keyboard).
 All 54 PCB/case files were verified byte-for-byte against the original firmware
 main before removal from this firmware working tree. Hardware-related history
 and historical licence records are retained; no PCB or case geometry was changed.
@@ -55,6 +55,5 @@ a verified pre-cleanup bundle. Obsolete hardware-licence files remain in older
 commits as historical licence records. Future hardware-only files belong in the
 keyboard-design repository.
 
-Publish the hardware repository and add its public link here when ready. The
-licence cleanup does not publish that repository or change the external ZMK
-modules.
+The hardware repository is published separately from the firmware. The external
+ZMK modules remain in their own repositories.
