@@ -14,3 +14,13 @@ material with its own notice retains its original licence.
 Firmware source, keymaps, devicetrees (including physical-layout definitions),
 configuration, and software documentation outside this directory use the
 [MIT licence](../LICENSE).
+
+## Project-page photographs
+
+Downloaded from the [Wafer project page](https://oleksandrmaslov.github.io/portfolio/Wafer.html) on 2026-11-10.
+Photographs by Oleksandr Maslov, used without image edits. The sources are:
+
+- [wafer-both-halves.webp](https://oleksandrmaslov.github.io/portfolio/public/media/wafer/both-halves.webp)
+- [wafer-side-profile.webp](https://oleksandrmaslov.github.io/portfolio/public/media/wafer/side-profile.webp)
+- [wafer-display.webp](https://oleksandrmaslov.github.io/portfolio/public/media/wafer/display-detail.webp)
+- [wafer-magnets.webp](https://oleksandrmaslov.github.io/portfolio/public/media/wafer/magnets-steel.webp)

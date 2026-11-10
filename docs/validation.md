@@ -40,7 +40,10 @@ The installed Zephyr SDK 1.0.1 is newer than Zephyr 4.1's supported SDK package
 range. Local validation used its ARM compiler through the supported
 `ZEPHYR_TOOLCHAIN_VARIANT=cross-compile` / `CROSS_COMPILE` settings rather than
 changing project code or the SDK. GitHub Actions continues to use ZMK's build
-container. The new workflow itself has not been run on GitHub yet.
+container. The default left/right GitHub builds also passed after publication at
+`2460a77`: [push build](https://github.com/oleksandrmaslov/wafer-zmk-config/actions/runs/42880827879)
+and [manual build](https://github.com/oleksandrmaslov/wafer-zmk-config/actions/runs/42883512967).
+The optional HID job was skipped in those runs; its two local builds passed.
 
 Existing KSCAN/BT_CTLR deprecation warnings remain. The local central display
 widget also has an existing switch warning for `ZMK_TRANSPORT_NONE`.
