@@ -1,64 +1,31 @@
-# Wafer ZMK Board
+# Wafer ZMK board
 
-This directory contains the Zephyr/ZMK board definition for the **Wafer** split keyboard. The layout follows the standard ZMK board structure (Zephyr Hardware Model v2), so files cannot be rearranged without breaking the build. Below is a classification of each file by what it does.
-
-## Build system & board metadata
-
-| File | Purpose |
-| --- | --- |
-| `CMakeLists.txt` | Zephyr CMake entry point - pulls board sources into the build. |
-| `board.cmake` | Board-level CMake hooks (flashing/runner config). |
-| `pre_dt_board.cmake` | Hooks run before devicetree generation. |
-| `board.yml` | Hardware Model v2 board metadata (qualifiers, SoC, variants). |
-| `wafer.yaml` | Legacy Zephyr board YAML (board name, supported features). |
-| `wafer.zmk.yml` | ZMK-specific board metadata (siblings, features, exposed in ZMK Studio / GitHub Actions). |
-
-## Kconfig (build-time options)
+Both halves are standalone nRF52840/ISP1807 boards. Use `wafer_left` (central)
+and `wafer_right` (peripheral); these existing board names and paths are retained.
 
 | File | Purpose |
 | --- | --- |
-| `Kconfig` | Top-level board Kconfig - declares board symbols. |
-| `Kconfig.defconfig` | Default Kconfig values applied when this board is selected. |
-| `Kconfig.wafer_left` | Kconfig overrides specific to the left half. |
-| `Kconfig.wafer_right` | Kconfig overrides specific to the right half. |
-| `wafer_defconfig` | Common Kconfig defaults compiled into both halves. |
-| `wafer_left_defconfig` | Kconfig defaults for the left-half build. |
-| `wafer_right_defconfig` | Kconfig defaults for the right-half build. |
+| `wafer_left.dts`, `wafer_right.dts` | Per-half column GPIO order; right-half transform offset. |
+| `wafer.dtsi` | Common MCU, matrix rows, transform, chosen devices, LED, external power, flash partitions. |
+| `wafer-pmic.dtsi` | nPM1300 I2C, regulators, charger, PMIC LEDs, VBAT sensor. |
+| `wafer-display.dtsi` | nice!view SPI and serial VCOM timing. |
+| `wafer-power.dtsi` | Dedicated sideband power button, split soft off, USB-only bootloader gesture, hold-to-wake. |
+| `wafer-pinctrl.dtsi` | Peripheral pin multiplexing. |
+| `wafer_left_defconfig`, `wafer_right_defconfig` | Hardware capabilities for each board. |
+| `Kconfig.defconfig` | Shared defaults, display widget selection and tested power/radio settings. |
+| `wafer.conf` | Battery reporting defaults for configurations without user overrides. |
+| `wafer.keymap` | Canonical standard 36-key QWERTY layout. |
+| `widgets/`, `custom_status_screen.c` | Local status display used by the default build. |
 
-## Devicetree (hardware description)
+The root `zephyr/module.yml` registers this board, `dts/` and `snippets/`.
+Root Kconfig/CMake register the local `modules/npm1300_vbat` driver exactly once.
+Its single binding lives at `dts/bindings/sensor/zmk,npm1300-vbat.yaml`; the board
+chooses `npm1300_vbat_sensor` as `zmk,battery`. The driver reports volts through
+`SENSOR_CHAN_VOLTAGE` (and the compatible gauge channel); ZMK converts voltage to
+battery percentage using its lithium curve. The driver currently expects the
+PMIC label `pmic`, as provided by this board.
 
-| File | Purpose |
-| --- | --- |
-| `wafer.dtsi` | Shared devicetree include - common hardware (MCU, peripherals, matrix). |
-| `wafer-pinctrl.dtsi` | Pin control / pinmux definitions for the SoC peripherals. |
-| `wafer_left.dts` | Devicetree for the left half (column offset, side-specific nodes). |
-| `wafer_right.dts` | Devicetree for the right half (column offset, side-specific nodes). |
-
-## ZMK firmware configuration
-
-| File | Purpose |
-| --- | --- |
-| `wafer.conf` | Shared ZMK/Kconfig flags applied to both halves at build time. |
-| `wafer.keymap` | Keymap (layers, behaviors, combos) - the user-facing layout. |
-
-## Display / UI
-
-| File | Purpose |
-| --- | --- |
-| `custom_status_screen.c` | Custom nice!view status screen rendering (LVGL widgets). |
-| `widgets/` | Supporting widget sources used by the custom status screen. |
-
-## Notes
-
-Most of these files follow conventions documented in the [ZMK docs](https://zmk.dev/docs) and the [Zephyr Hardware Model v2](https://docs.zephyrproject.org/latest/hardware/porting/board_porting.html). They are required to live in this exact folder structure for the ZMK build system to discover the board.
-
-
-## Battery / nPM1300 VBAT
-
-This board reports battery state from a Nordic **nPM1300** PMIC. The standard ZMK `nordic,npm1300-charger` battery binding only exposes charger state, not VBAT, so we ship a small custom Zephyr sensor driver that triggers a VBAT measurement on the PMIC ADC and reports the voltage on `SENSOR_CHAN_GAUGE_VOLTAGE` in millivolts. ZMK then converts that to a battery percentage through its lithium-voltage curve.
-
-The driver lives as a ZMK module in this repo at `modules/npm1300_vbat/` (devicetree binding `zmk,npm1300-vbat`, Kconfig `CONFIG_ZMK_NPM1300_VBAT`). The board's `wafer.dtsi` declares an `npm1300_vbat_sensor` node that takes a phandle to the existing `pmic` (`pmic@6b`) node, and `zmk,battery` in `chosen` points at this sensor. Required Kconfig flags live in `wafer.conf`: `CONFIG_ZMK_BATTERY_REPORTING=y`, `CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE=y`, `CONFIG_ZMK_NPM1300_VBAT=y`.
-
-## Building
-
-The board builds against upstream **`zmkfirmware/zmk@main`**. The west manifest is `config/west.yml` and it imports the upstream `app/west.yml`. GitHub Actions in `.github/workflows/build.yml` runs on every push and produces the left/right firmware artifacts, so build status is visible directly on each commit.
+The external `zmk-soft-off-plus` module is required by the board's dedicated
+power-button tree. `zmk-split-hid-display` is optional: its relay node and feature
+configuration live entirely in `snippets/wafer-hid-display/`.
+See the [root README](../../../README.md) for build instructions.

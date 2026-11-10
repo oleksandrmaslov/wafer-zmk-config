@@ -1,0 +1,19 @@
+manifest:
+  remotes:
+    - name: zmkfirmware
+      url-base: https://github.com/zmkfirmware
+    - name: oleksandrmaslov
+      url-base: https://github.com/oleksandrmaslov
+  projects:
+    - name: zmk
+      remote: zmkfirmware
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
+      import: app/west.yml
+    - name: zmk-soft-off-plus
+      remote: oleksandrmaslov
+      revision: 822aa0b6c970ec08b19ab0ba056098dcba6bfa46
+    - name: zmk-split-hid-display
+      remote: oleksandrmaslov
+      revision: ce04bf6e90f71ecae69e6c6b9f75522cb5578327
+  self:
+    path: config/hid-display

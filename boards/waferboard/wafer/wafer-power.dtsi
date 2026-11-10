@@ -1,0 +1,63 @@
+/* SPDX-License-Identifier: MIT */
+
+/ {
+    keys {
+        compatible = "gpio-keys";
+        soft_off_gpio_key: soft_off_gpio_key {
+            gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        };
+    };
+
+    behaviors {
+        hw_soft_off: sop {
+            compatible = "zmk,behavior-soft-off-plus";
+            #binding-cells = <0>;
+            hold-time-ms = <1500>;
+            trigger-on-hold;
+        };
+
+        if_usb_dfu: if_usb_dfu {
+            compatible = "zmk,behavior-if-usb";
+            #binding-cells = <0>;
+            bindings = <&bootloader>;
+        };
+
+        power_btn_combo: pwr_cmb {
+            compatible = "zmk,behavior-power-button";
+            #binding-cells = <0>;
+            tapping-term-ms = <300>;
+            bindings = <&hw_soft_off>, <&if_usb_dfu>;
+        };
+    };
+
+    wakeup_scan: wakeup_scan {
+        compatible = "zmk,kscan-gpio-direct";
+        input-keys = <&soft_off_gpio_key>;
+        wakeup-source;
+    };
+
+    side_band_behavior_triggers: side_band_behavior_triggers {
+        compatible = "zmk,kscan-sideband-behaviors";
+        kscan = <&wakeup_scan>;
+        auto-enable;
+        wakeup-source;
+
+        soft_off {
+            column = <0>;
+            row = <0>;
+            bindings = <&power_btn_combo>;
+        };
+    };
+
+    soft_off_wakers {
+        compatible = "zmk,soft-off-wakeup-sources";
+        wakeup-sources = <&wakeup_scan>;
+    };
+
+    soft_off_plus_wake: soft_off_plus_wake {
+        compatible = "zmk,soft-off-plus-wake";
+        wake-gpios = <&gpio0 3 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;
+        wake-hold-ms = <1500>;
+        bypass-on-usb;
+    };
+};

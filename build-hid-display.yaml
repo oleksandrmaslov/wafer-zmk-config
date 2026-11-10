@@ -1,0 +1,8 @@
+---
+include:
+  - board: wafer_left
+    snippet: wafer-hid-display
+    artifact-name: wafer_left_hid_display
+  - board: wafer_right
+    snippet: wafer-hid-display
+    artifact-name: wafer_right_hid_display

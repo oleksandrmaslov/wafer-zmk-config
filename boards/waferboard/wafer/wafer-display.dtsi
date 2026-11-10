@@ -1,0 +1,28 @@
+/*
+ * Copyright (c) 2020 The ZMK Contributors
+ * SPDX-License-Identifier: MIT
+ */
+
+/* nice!view (Sharp LS0xx) SPI0: MOSI=P0.20, SCK=P0.17, CS=P0.06 */
+
+display_spi: &spi0 {
+    status = "okay";
+    compatible = "nordic,nrf-spim";
+    pinctrl-0 = <&spi0_default>;
+    pinctrl-1 = <&spi0_sleep>;
+    pinctrl-names = "default", "sleep";
+    cs-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
+
+    display: ls0xx@0 {
+        compatible = "sharp,ls0xx";
+        spi-max-frequency = <1000000>;
+        reg = <0>;
+        width = <160>;
+        height = <68>;
+        /* nice!view has no EXTCOMIN connection, so the LS0xx driver must
+         * invert VCOM over SPI. Match ZMK's standard nice_view overlay. */
+        serial-vcom-inversion;
+        serial-vcom-interval = <33>;
+        vin-supply = <&npm1300_ldo1>;
+    };
+};

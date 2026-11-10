@@ -2,13 +2,15 @@ manifest:
   remotes:
     - name: zmkfirmware
       url-base: https://github.com/zmkfirmware
-    # Keep the personal fork remote available in case we need to roll back.
     - name: oleksandrmaslov
       url-base: https://github.com/oleksandrmaslov
   projects:
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: 4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85
       import: app/west.yml
+    - name: zmk-soft-off-plus
+      remote: oleksandrmaslov
+      revision: 822aa0b6c970ec08b19ab0ba056098dcba6bfa46
   self:
     path: config

@@ -6,17 +6,16 @@
 
 /dts-v1/;
 #include <nordic/nrf52840_qiaa.dtsi>
+#include <common/nordic/nrf52840_uf2_boot_mode.dtsi>
 #include "wafer-pinctrl.dtsi"
 #include <dt-bindings/zmk/matrix_transform.h>
-#include <dt-bindings/regulator/npm1300.h>
-#include <zephyr/dt-bindings/input/input-event-codes.h>
 #include <layouts/wafer/wafer_layout.dtsi>
 
 &wafer_layout_phys {
     transform = <&default_transform>;
 };
 
- / {
+/ {
     model = "wafer";
     compatible = "waferkeyboard,wafer";
 
@@ -43,10 +42,20 @@
         >;
     };
 
+    kscan0: kscan {
+        compatible = "zmk,kscan-gpio-matrix";
+        wakeup-source;
+        diode-direction = "col2row";
+        row-gpios = <&gpio1 9 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio1 8 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio1 5 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>,
+                    <&gpio1 13 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
+    };
+
     leds {
         compatible = "gpio-leds";
         blue_led: led_0 {
-            gpios = <&gpio0 5 GPIO_ACTIVE_HIGH>;
+            gpios = <&gpio0 16 GPIO_ACTIVE_HIGH>;
         };
     };
 
@@ -75,102 +84,6 @@
     pinctrl-names = "default", "sleep";
 };
 
-/* nice!view (Sharp LS0xx) SPI0: MOSI=P0.20, SCK=P0.17, CS=P0.06 */
-
-display_spi: &spi0 {
-    status = "okay";
-    compatible = "nordic,nrf-spim";
-    pinctrl-0 = <&spi0_default>;
-    pinctrl-1 = <&spi0_sleep>;
-    pinctrl-names = "default", "sleep";
-    cs-gpios = <&gpio0 6 GPIO_ACTIVE_HIGH>;
-
-    display: ls0xx@0 {
-        compatible = "sharp,ls0xx";
-        spi-max-frequency = <1000000>;
-        reg = <0>;
-        width = <160>;
-        height = <68>;
-        vin-supply = <&npm1300_ldo1>;
-    };
-};
-
-/* I2C1: nPM1300, BAT_I2C_SCL=P0.02, BAT_I2C_SDA=P0.31 */
-
-&i2c1 {
-    compatible = "nordic,nrf-twi";
-    status = "okay";
-    pinctrl-0 = <&i2c1_default>;
-    pinctrl-1 = <&i2c1_sleep>;
-    pinctrl-names = "default", "sleep";
-
-    pmic: pmic@6b {
-        compatible = "nordic,npm1300";
-        reg = <0x6b>;
-        status = "okay";
-
-        npm1300_gpio: gpio-controller {
-            compatible = "nordic,npm1300-gpio";
-            gpio-controller;
-            #gpio-cells = <2>;
-            ngpios = <5>;
-        };
-
-        npm1300_regulators: regulators {
-            compatible = "nordic,npm1300-regulator";
-
-            npm1300_buck1: BUCK1 {
-                regulator-boot-off;
-                status = "disabled";
-            };
-
-            npm1300_buck2: BUCK2 {
-                regulator-min-microvolt = <1800000>;
-                regulator-max-microvolt = <3300000>;
-                regulator-boot-on;
-                regulator-always-on;
-                regulator-initial-mode = <NPM1300_BUCK_MODE_AUTO>;
-            };
-
-            npm1300_ldo1: LDO1 {
-                regulator-min-microvolt = <3000000>;
-                regulator-max-microvolt = <3300000>;
-                regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
-                enable-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_LOW>;
-                regulator-boot-on;
-            };
-
-            /* Free LDO */
-            npm1300_ldo2: LDO2 {
-                status = "disabled";
-            };
-        };
-
-        npm1300_charger: charger {
-            compatible = "nordic,npm1300-charger";
-            label = "BATTERY";
-            status = "okay";
-
-            term-microvolt = <4200000>;
-            term-warm-microvolt = <3600000>;
-            current-microamp = <124000>;
-            dischg-limit-microamp = <1000000>;
-            trickle-microvolt = <2900000>;
-            vbus-limit-microamp = <500000>;
-            thermistor-ohms = <0>;
-            thermistor-beta = <0>;
-            charging-enable;
-        };
-
-        npm1300_leds: leds {
-            compatible = "nordic,npm1300-led";
-            nordic,led0-mode = "charging";
-            nordic,led1-mode = "host";
-            nordic,led2-mode = "error";
-        };
-    };
-};
-
 zephyr_udc0: &usbd {
     status = "okay";
 };
@@ -197,19 +110,6 @@ zephyr_udc0: &usbd {
     };
 };
 
-
-
-
-/*
- * ZMK custom sensor: triggers VBAT measurement on the nPM1300 PMIC and
- * exposes SENSOR_CHAN_GAUGE_VOLTAGE in millivolts. Pair with
- * CONFIG_ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE so ZMK derives
- * the battery percentage from the lithium curve.
- */
-/ {
-	npm1300_vbat_sensor: npm1300_vbat_sensor {
-		compatible = "zmk,npm1300-vbat";
-		pmic = <&pmic>;
-		status = "okay";
-	};
-};
+#include "wafer-pmic.dtsi"
+#include "wafer-display.dtsi"
+#include "wafer-power.dtsi"

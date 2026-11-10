@@ -1,5 +1,20 @@
-on: [push, pull_request, workflow_dispatch]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      hid_display:
+        description: Also build the optional HID display firmware
+        type: boolean
+        default: false
 
 jobs:
   build:
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+  hid-display:
+    if: github.event_name == 'pull_request' || inputs.hid_display == true
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    with:
+      config_path: config/hid-display
+      build_matrix_path: build-hid-display.yaml
+      archive_name: firmware-hid-display

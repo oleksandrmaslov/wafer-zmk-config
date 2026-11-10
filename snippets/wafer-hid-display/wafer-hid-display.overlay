@@ -1,0 +1,9 @@
+/* SPDX-License-Identifier: MIT */
+
+/ {
+    rawhid_or: rawhid_or {
+        compatible = "zmk,split-peripheral-output-relay";
+        relay-channel = <1>;
+        device = <&display>;
+    };
+};

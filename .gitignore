@@ -1,0 +1,4 @@
+# Local firmware build outputs
+/build/
+/.west/
+__pycache__/

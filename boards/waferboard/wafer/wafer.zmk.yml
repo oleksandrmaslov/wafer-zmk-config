@@ -3,11 +3,10 @@ id: wafer
 name: wafer
 type: board
 arch: arm
-url: https://example.com/wafer
+url: https://github.com/oleksandrmaslov/wafer-zmk-config
 features:
   - keys
   - display
-  - studio
 outputs:
   - usb
   - ble
