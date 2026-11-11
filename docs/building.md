@@ -68,8 +68,11 @@ Connect the half you want to flash by USB. Triple-tap its dedicated power button
 to enter the UF2 bootloader, then copy the matching left or right UF2 to the
 bootloader drive. Repeat for the other half with its own firmware file.
 
-After a deliberate shutdown, hold each half's power button for 1.5 seconds to
-wake it. A half in System OFF cannot wake the other half over Bluetooth.
+After a deliberate shutdown on battery, hold each half's power button for
+1.5 seconds to wake it. The board's `bypass-on-usb` setting permits a short
+button press instead when USB power is detected. Wake the half before using
+the triple-tap bootloader gesture. A half in System OFF cannot wake the other
+half over Bluetooth.
 
 See the [board file guide](../boards/waferboard/wafer/README.md),
 [validation record](validation.md), and [root README](../README.md).

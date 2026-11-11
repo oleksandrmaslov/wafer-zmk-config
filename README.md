@@ -26,8 +26,9 @@ to change it, and put your other settings in [config/wafer.conf](config/wafer.co
 The default build keeps the local nice!view status screen and
 [zmk-soft-off-plus](https://github.com/oleksandrmaslov/zmk-soft-off-plus).
 Hold the power button for about 1.8 seconds, then release it to turn both
-connected halves off. Hold each half's button for 1.5 seconds to wake it;
-triple-tap the button on a USB-connected half to enter its bootloader.
+connected halves off. On battery, hold each half's button for 1.5 seconds to
+wake it. USB wake bypass allows a short press when USB power is detected.
+Triple-tap the plugged-in half's button while awake to enter its bootloader.
 
 The [nPM1300 battery driver](modules/npm1300_vbat/) lives here. Soft-off-plus and
 [zmk-split-hid-display](https://github.com/oleksandrmaslov/zmk-split-hid-display)

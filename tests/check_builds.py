@@ -24,7 +24,8 @@ for build in builds:
     assert (build / "zephyr/zmk.uf2").is_file(), f"{build}: firmware did not finish building"
     for name in ("ZMK_PM_SOFT_OFF", "ZMK_NPM1300_VBAT", "ZMK_BATTERY_REPORTING_FETCH_MODE_LITHIUM_VOLTAGE",
                  "ZMK_SOFT_OFF_PLUS_SPLIT_SYNC", "ZMK_SOFT_OFF_PLUS_POWER_BUTTON",
-                 "ZMK_SOFT_OFF_PLUS_WAKE_DELAY", "ZMK_SOFT_OFF_PLUS_DEEP_SLEEP_WAKE"):
+                 "ZMK_SOFT_OFF_PLUS_WAKE_DELAY", "ZMK_SOFT_OFF_PLUS_DEEP_SLEEP_WAKE",
+                 "ZMK_SOFT_OFF_PLUS_BLANK_INVERTED"):
         assert config.get("CONFIG_" + name) == "y", (build, name)
     assert config.get("CONFIG_BT_CTLR_PHY_2M") != "y"
     assert (config.get("CONFIG_NICE_VIEW_WIDGET_STATUS") == "y") != hid
