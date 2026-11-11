@@ -14,6 +14,6 @@ manifest:
       revision: e24d18023b72bca9a53e737decd1123851823c8e
     - name: zmk-split-hid-display
       remote: oleksandrmaslov
-      revision: ce04bf6e90f71ecae69e6c6b9f75522cb5578327
+      revision: b5c00042bce37f02b1b70b9e7d3b6913f013e7a6
   self:
     path: config/hid-display
