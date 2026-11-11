@@ -32,7 +32,28 @@
         };
     };
 
+    macros {
+        lang_tap: lang_tap {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <0>;
+            tap-ms = <0>;
+            // KDE's modifier-only shortcut needs Alt in its own report before Shift.
+            bindings = <&macro_press &kp LALT>,
+                       <&macro_tap &kp LSHFT>,
+                       <&macro_release &kp LALT>;
+        };
+    };
+
     behaviors {
+        lang: lang {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo>, <&lang_tap>;
+        };
+
         mod_tap: mod_tap {
             compatible = "zmk,behavior-hold-tap";
             label = "MOD_TAP";
@@ -72,7 +93,7 @@
 &kp Q                &kp W                &kp E             &kp R                   &kp T                     &kp Y        &kp U                  &kp I             &kp O            &kp P
 &mod_tap LEFT_WIN A  &mod_tap LEFT_ALT S  &mod_tap LCTRL D  &mod_tap LEFT_SHIFT F   &kp G                     &kp H        &mod_tap LEFT_SHIFT J  &mod_tap LCTRL K  &mod_tap LALT L  &mod_tap LEFT_WIN SEMI
 &kp Z                &kp X                &kp C             &kp V                   &kp B                     &kp N        &kp M                  &kp COMMA         &kp DOT          &kp FSLH
-                                                            &lt (1) LA(LEFT_SHIFT)  &lt 2 TAB  &lt 3 SPACE    &lt 4 ENTER  &backspace_delete      &lt 5 ESCAPE
+                                                            &lang 1 0              &lt 2 TAB  &lt 3 SPACE    &lt 4 ENTER  &backspace_delete      &lt 5 ESCAPE
             >;
         };
 
