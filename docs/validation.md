@@ -35,7 +35,7 @@ consistency, board matrices, and `git diff --check` also passed.
 - ZMK: `4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85`
 - Zephyr: `10ba6d0cb38bc3d258775d27982f707599320085` (resolved from ZMK's imported
   `v4.1.0+zmk-fixes` reference; that imported reference is not an immutable pin)
-- soft-off-plus: `e24d18023b72bca9a53e737decd1123851823c8e`
+- soft-off-plus: `ef9eacf6f08e77101df4c2f186b45c10cc467365`
 - optional HID module: `b5c00042bce37f02b1b70b9e7d3b6913f013e7a6`
 - Python 3.12, CMake 3.30.5, west 1.5.0, ARM GCC 14.3.0
 
@@ -76,3 +76,18 @@ tested on hardware.
 Locally built UF2 files are in ignored `build/validated/standard/` and
 `build/validated/hid-display/`. Runtime power behavior, display rendering,
 Bluetooth stability, and real battery readings still require a keyboard check.
+
+## Wake-hold startup order (2026-11-23)
+
+The previous firmware initialized SPI and USB before entering the wake hold
+guard, leaving peripheral I/O active while boot was paused before panel setup.
+The Nordic guard now runs at POST_KERNEL priority 1, after native GPIO setup and
+before SPI/USB. It disables external power for both the battery hold and USB
+debounce, and uses the Nordic VBUS register before the USB stack is initialized.
+The inverted shutdown blank remains enabled; its color setting is unchanged.
+
+The module's native regression checks exercise the real wake code, including
+USB detection before stack initialization and an unpowered rail during every
+wait. `tests/check_wake_order.py` verifies the actual linked initialization order
+and is also run by `tests/check_builds.py`. Physical suppression of the reported
+random startup pixels still requires testing these updated images on the keyboard.
