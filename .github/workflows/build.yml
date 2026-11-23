@@ -15,6 +15,7 @@ jobs:
     if: github.event_name == 'pull_request' || inputs.hid_display == true
     uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
     with:
-      config_path: config/hid-display
+      # Upstream's isolated copy step requires a top-level directory name.
+      config_path: hid-display
       build_matrix_path: build-hid-display.yaml
       archive_name: firmware-hid-display

@@ -28,6 +28,9 @@ west build -s zmk/app -d build/right -b wafer_right -- -DZMK_CONFIG="$PWD/wafer/
 ## Optional HID display
 
 This profile enables host-driven nice!view data and the split Raw HID relay.
+The Actions job uses the top-level `hid-display` symlink because ZMK's isolated
+config-copy step cannot create a nested config directory. Local builds can use
+`config/hid-display/` as before.
 On GitHub, run **build** manually with **hid_display** checked. Pull requests
 also compile this profile to check it alongside the default firmware; its UF2s
 are in the separate `firmware-hid-display` archive.
@@ -48,6 +51,9 @@ west build -s zmk/app -d build/hid-right -b wafer_right -S wafer-hid-display -- 
 
 The two manifests pin the same ZMK and soft-off revisions. Keep these pins in
 sync when upgrading. The optional profile additionally pins the HID module.
+After updating module defaults in an existing workspace, use a pristine build
+(`west build -p always ...`); an old generated `.config` can retain the previous
+values even after the module source changes.
 Set `CONFIG_NICE_VIEW_HID_LAYOUTS` in the snippet to match your host app's language
 order (default `US`). Custom keymap/config overrides for this profile belong in
 `config/hid-display/`. Normal builds have no Raw HID interface or relay.
