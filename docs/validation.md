@@ -97,10 +97,16 @@ soft-off module, inverted shutdown blank, hold timing and Raw HID framing fix
 are unchanged. A test overlay changed only these two devicetree properties;
 its Kconfig was identical to the previous personal build.
 
-The user tested the right half on battery: three brief taps remained free of
+The user tested both halves on battery: three brief taps remained free of
 noise after allowing for MIP retention, and a full hold showed the normal image.
+The right half used the isolated two-property test build; the left half used
+the official personal Actions image from commit `a3bd6ce`.
 `tests/check_power_reset_bias.py` rejects the previous configuration and checks
 that the real generated devicetrees keep display power off when the MCU releases
 the enable line. It also checks that both ends agree on polarity and is run by
-`tests/check_builds.py`. Left-half runtime behavior and current draw still need
-hardware checks.
+`tests/check_builds.py`. All six clean local configurations passed the polarity
+check. The personal Actions run
+[`45377130299`](https://github.com/oleksandrmaslov/wafer-zmk-config/actions/runs/45377130299)
+and the standard/optional-HID main run
+[`45377130483`](https://github.com/oleksandrmaslov/wafer-zmk-config/actions/runs/45377130483)
+both passed. Current draw has not been measured.
