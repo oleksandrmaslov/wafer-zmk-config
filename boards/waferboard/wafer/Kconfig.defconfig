@@ -33,6 +33,9 @@ endif # USB
 config ZMK_SOFT_OFF_PLUS_DEEP_SLEEP_WAKE
     default y
 
+config ZMK_SOFT_OFF_PLUS_BLANK_INVERTED
+    default y
+
 config BT_CTLR_PHY_2M
     default n
 

@@ -11,6 +11,6 @@ manifest:
       import: app/west.yml
     - name: zmk-soft-off-plus
       remote: oleksandrmaslov
-      revision: ef9eacf6f08e77101df4c2f186b45c10cc467365
+      revision: 42784a454ca21ccd46c99497cca6af7d0df4bf13
   self:
     path: config

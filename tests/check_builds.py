@@ -3,7 +3,6 @@
 import json
 import pickle
 from pathlib import Path
-import subprocess
 import sys
 
 zephyr, *builds = map(Path, sys.argv[1:])
@@ -56,6 +55,3 @@ for build in builds:
     assert [layer.props["display-name"].val for layer in layers] == ["QWERTY", "NUMBER", "SYMBOL"]
     assert all(len(layer.props["bindings"].val) == 36 for layer in layers)
     print(f"{build.name}: power, matrix, battery, standard keymap and HID isolation passed")
-
-subprocess.run([sys.executable, str(Path(__file__).with_name("check_wake_order.py")),
-                str(zephyr), *map(str, builds)], check=True)

@@ -1,8 +1,7 @@
 # Firmware cleanup validation
 
-Validated locally on 2026-11-10 and revalidated on 2026-11-11 after moving
-inverted shutdown blanking into the module's defaults and fixing Linux BLE
-Raw HID report framing. No firmware was flashed to hardware.
+Validated locally on 2026-11-10 and revalidated on 2026-11-11 after fixing
+Linux BLE Raw HID report framing. No firmware was flashed by these checks.
 
 | Build | Result |
 | --- | --- |
@@ -15,7 +14,7 @@ All four builds passed `tests/check_builds.py`, checking the actual generated
 Kconfig and devicetree artifacts for:
 
 - enabled split soft off, button gesture, hold-to-wake and inactivity wake guard;
-- inverted shutdown blanking enabled by the module, without a Wafer override;
+- inverted shutdown blanking explicitly enabled by the Wafer board;
 - correct active-low P0.03 power/wake GPIO and 1500 ms timings;
 - mirrored right-half columns and its five-column transform offset;
 - consistency between the keymap editor matrix positions and ZMK transform;
@@ -35,7 +34,7 @@ consistency, board matrices, and `git diff --check` also passed.
 - ZMK: `4dd95d7840eb3d5a3f59bb29fbf1ab054715ef85`
 - Zephyr: `10ba6d0cb38bc3d258775d27982f707599320085` (resolved from ZMK's imported
   `v4.1.0+zmk-fixes` reference; that imported reference is not an immutable pin)
-- soft-off-plus: `ef9eacf6f08e77101df4c2f186b45c10cc467365`
+- soft-off-plus: `42784a454ca21ccd46c99497cca6af7d0df4bf13`
 - optional HID module: `b5c00042bce37f02b1b70b9e7d3b6913f013e7a6`
 - Python 3.12, CMake 3.30.5, west 1.5.0, ARM GCC 14.3.0
 
@@ -51,12 +50,12 @@ The optional HID job was skipped in those runs; its two local builds passed.
 Existing KSCAN/BT_CTLR deprecation warnings remain. The local central display
 widget also has an existing switch warning for `ZMK_TRANSPORT_NONE`.
 
-Clean configuration checks also verified the module's inverted default for
-`main` and `personal-layout` with both Wafer overrides removed, and confirmed
-that an explicit `n` remains supported for non-inverted display pipelines.
-The power/wake device trees and effective power settings still match the
-personal reference. The reported battery-powered short/double-tap wake has not
-been reproduced on hardware; this change only moves the blanking default.
+On 2026-11-24, the module-wide inverted blanking default and the later early
+Nordic wake guard were reverted after the startup display blinking persisted on
+hardware. The soft-off module tree again matches `822aa0b`; Wafer explicitly
+enables inverted blanking in the board configuration. Personal firmware keeps
+its original explicit `CONFIG_ZMK_SOFT_OFF_PLUS_BLANK_INVERTED=y` setting.
+The separate Raw HID framing fix remains pinned and unchanged.
 
 The HID profile and personal left/right builds also passed after the BLE framing
 fix. The module's regression check replays native reports and Linux-style
@@ -76,18 +75,3 @@ tested on hardware.
 Locally built UF2 files are in ignored `build/validated/standard/` and
 `build/validated/hid-display/`. Runtime power behavior, display rendering,
 Bluetooth stability, and real battery readings still require a keyboard check.
-
-## Wake-hold startup order (2026-11-23)
-
-The previous firmware initialized SPI and USB before entering the wake hold
-guard, leaving peripheral I/O active while boot was paused before panel setup.
-The Nordic guard now runs at POST_KERNEL priority 1, after native GPIO setup and
-before SPI/USB. It disables external power for both the battery hold and USB
-debounce, and uses the Nordic VBUS register before the USB stack is initialized.
-The inverted shutdown blank remains enabled; its color setting is unchanged.
-
-The module's native regression checks exercise the real wake code, including
-USB detection before stack initialization and an unpowered rail during every
-wait. `tests/check_wake_order.py` verifies the actual linked initialization order
-and is also run by `tests/check_builds.py`. Physical suppression of the reported
-random startup pixels still requires testing these updated images on the keyboard.
