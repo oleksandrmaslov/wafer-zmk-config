@@ -61,8 +61,8 @@
 
     EXT_POWER {
         compatible = "zmk,ext-power-generic";
-        /* P0.29 -> nPM1300 GPIO0 to toggle the load switch */
-        control-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
+        /* Match GPIO0's PMIC pull-down: a released MCU pin must keep power off. */
+        control-gpios = <&gpio0 29 GPIO_ACTIVE_HIGH>;
         init-delay-ms = <150>;
     };
 };

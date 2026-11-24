@@ -46,7 +46,7 @@
                 regulator-min-microvolt = <3000000>;
                 regulator-max-microvolt = <3300000>;
                 regulator-initial-mode = <NPM1300_LDSW_MODE_LDSW>;
-                enable-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_LOW>;
+                enable-gpios = <&npm1300_gpio 0 GPIO_ACTIVE_HIGH>;
                 regulator-boot-on;
                 /* EXT_POWER waits before nPM1300 finishes configuring GPIO
                  * control. If LDO1 was initially off, give it the same settle

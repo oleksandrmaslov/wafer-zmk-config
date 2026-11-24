@@ -75,3 +75,32 @@ tested on hardware.
 Locally built UF2 files are in ignored `build/validated/standard/` and
 `build/validated/hid-display/`. Runtime power behavior, display rendering,
 Bluetooth stability, and real battery readings still require a keyboard check.
+
+## Display power during rejected wake attempts (2026-11-24)
+
+The right-half application was read back through `CURRENT.UF2` and matched the
+personal rollback image byte for byte. Verified erasure of all eight settings
+pages and a separate nPM1300 full power reset did not remove the reported noise.
+The PMIC reset cleared its retained load-switch state, then normal driver
+initialization restored all 11 sampled registers to their previous values.
+
+GPIO0 retained its factory pull-down (`GPIOPDEN[0] = 1`, `GPIOPUEN[0] = 0`).
+Both ends of the display enable wire were configured active-low, so a released
+MCU pin could request display power before the wake hold was confirmed. The
+[bootloader's base revision](https://github.com/adafruit/Adafruit_nRF52_Bootloader/blob/91df8bd/src/boards/boards.c#L156)
+resets all GPIOs before handing control to the application. Nordic documents
+the pull-down default in the [nPM1300 GPIO specification](https://docs.nordicsemi.com/r/bundle/ps_npm1300/page/chapters/core_components/gpio/doc/frontpage.html).
+
+P0.29 and the PMIC GPIO0 enable input now both use active-high polarity. The
+default low level keeps the load switch off through bootloader handoff. The
+soft-off module, inverted shutdown blank, hold timing and Raw HID framing fix
+are unchanged. A test overlay changed only these two devicetree properties;
+its Kconfig was identical to the previous personal build.
+
+The user tested the right half on battery: three brief taps remained free of
+noise after allowing for MIP retention, and a full hold showed the normal image.
+`tests/check_power_reset_bias.py` rejects the previous configuration and checks
+that the real generated devicetrees keep display power off when the MCU releases
+the enable line. It also checks that both ends agree on polarity and is run by
+`tests/check_builds.py`. Left-half runtime behavior and current draw still need
+hardware checks.
