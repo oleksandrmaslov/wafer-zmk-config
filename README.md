@@ -6,7 +6,6 @@
 by magnets.**
 
 [Project page](https://oleksandrmaslov.github.io/portfolio/Wafer.html) ·
-[Build journal on Hack Club Blueprint](https://blueprint.hackclub.com/projects/2800) ·
 [PCB and case files](https://github.com/oleksandrmaslov/wafer-keyboard) ·
 [Build and flashing guide](docs/building.md)
 
