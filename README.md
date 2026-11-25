@@ -1,6 +1,14 @@
 # Wafer
 
-![Wafer title photo](assets/wafer_title.png)
+![Wafer, a thin wireless split keyboard in a black aluminium case](assets/wafer_title.webp)
+
+**A wireless split keyboard 4–8 mm thick, in a CNC aluminium case held together
+by magnets.**
+
+[Project page](https://oleksandrmaslov.github.io/portfolio/Wafer.html) ·
+[Build journal on Hack Club Blueprint](https://blueprint.hackclub.com/projects/2800) ·
+[PCB and case files](https://github.com/oleksandrmaslov/wafer-keyboard) ·
+[Build and flashing guide](docs/building.md)
 
 Wafer is a 36 key ultra-thin split keyboard that stays between 4–8 mm thick,
 depending where you measure it. It runs on an ISP1807 with an nPM1300 PMIC, and
@@ -8,8 +16,39 @@ the full aluminium case snaps together with magnets for a clean profile.
 Kailh PG1316S switches, a nice!view display and a 250 mAh LiPo in each half.
 It runs ZMK over Bluetooth LE or USB.
 
-More photos and the full story are on
-[the project page](https://oleksandrmaslov.github.io/portfolio/Wafer.html).
+| | |
+| --- | --- |
+| Thickness | 4–8 mm |
+| Keys | 36, split |
+| Switches | Kailh PG1316S with custom springs |
+| Controller | ISP1807 (nRF52840) in each half |
+| Power | nPM1300 PMIC, 250 mAh LiPo in each half |
+| Display | nice!view (memory-in-pixel) on each half |
+| Case | CNC-milled aluminium, magnetic |
+| Connection | Bluetooth LE or USB |
+| Firmware | ZMK |
+
+***
+
+## USE WAFER'S FIRMWARE ON YOUR KEYBOARD
+
+You don't need a Wafer to use the firmware work behind it. These run on other
+ZMK keyboards too:
+
+- [zmk-split-hid-display](https://github.com/oleksandrmaslov/zmk-split-hid-display):
+  your computer sends the time, volume, keyboard layout and the song that's
+  playing over Raw HID. The central half passes it to the other half, so both
+  nice!views show it. Built on zzeneg's
+  [zmk-raw-hid](https://github.com/zzeneg/zmk-raw-hid) and
+  [zmk-nice-view-hid](https://github.com/zzeneg/zmk-nice-view-hid).
+- [zmk-soft-off-plus](https://github.com/oleksandrmaslov/zmk-soft-off-plus):
+  one dedicated power button turns off both halves. Also hold-to-wake, a
+  USB-only bootloader gesture and a deep-sleep wake guard.
+- [nPM1300 battery driver](modules/npm1300_vbat/): battery reporting for
+  boards with an nPM1300 PMIC.
+- [Wafer Studio](https://github.com/oleksandrmaslov/wafer-studio): a faster
+  keymap editor for any ZMK Studio keyboard. Press a key to bind it, paint
+  home-row mods across a row, copy a layer and change only what differs.
 
 ***
 
@@ -96,6 +135,9 @@ And in KiCad:
 
 ![Wafer case render](assets/wafer%20render.jpg)
 
+If you like Wafer, a star on GitHub helps other people find it. Built something
+with these modules? Open an issue with a photo, I'd love to see it.
+
 ***
 
 ## LICENSE
@@ -126,7 +168,9 @@ third-party notices and earlier licence grants remain applicable.
 
 ### INSPIRATION
 
-Inspired by the [Totem Keyboard](https://github.com/GEIGEIGEIST/TOTEM) and [Mikehive](https://github.com/mikeholscher/zmk-config-mikefive), but with a slimmer profile and magnets for usability. Big thanks to Rasmus for introducing me to the ISP1807.
+Inspired by [TOTEM](https://github.com/GEIGEIGEIST/TOTEM) by GEIST and
+[mikefive](https://github.com/mikeholscher/zmk-config-mikefive) by Mike Hölscher,
+but with a slimmer profile and magnets for usability. Big thanks to Rasmus for introducing me to the ISP1807.
 
 ### HELP FIXING THINGS
 
